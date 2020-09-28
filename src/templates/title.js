@@ -4,8 +4,8 @@ import Layout from "../layout"
 
 
 const HeaderContainer = styled.div`
-height: 30vh;
-max-height: 800px;
+height: 400px;
+padding: 30px;
 display: flex;
 background-color: white;
 `
@@ -13,6 +13,7 @@ background-color: white;
 const SummaryInfo = styled.div`
 display: flex;
 flex-direction: column;
+padding: 0 30px;
 `
 const Title = styled.h1`
 `
@@ -28,8 +29,7 @@ padding-right: 5px;
 `
 
 const Poster = styled.div`
-width: 200px;
-height: 300px;
+width: 227px;
 background-image: ${props => props.bgImageUrl};
 background-size: contain;
 background-repeat: no-repeat;
