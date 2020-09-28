@@ -27,7 +27,7 @@ color: white;
 padding: 1;
 `
 
-const StyledFA = styled(FontAwesomeIcon)`
+const StyledIcon = styled(FontAwesomeIcon)`
 margin: 0 8px 0 5px;
 `
 
@@ -114,7 +114,7 @@ export default function Header() {
 
             <HeaderText>
                 <Link to="/">
-                    <StyledFA icon="ticket-alt" spin />
+                    <StyledIcon icon="ticket-alt" />
                 JMDB
                 </Link>
             </HeaderText>

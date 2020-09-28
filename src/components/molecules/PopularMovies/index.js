@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "@xstyled/styled-components"
-
 import Movie from "../../atoms/Movie"
+import { Link } from "gatsby"
 
 
 const MovieList = styled.ul`
@@ -23,13 +23,13 @@ export default function PopularMovies() {
                     let tempMovieData = result.results.map((thisMovie, index) => {
                         return (
                             <li key={index}>
-                                <Movie movie={thisMovie} posterUrl={poster_url} />
+                                <Link to={`/title?id=${thisMovie.id}`}>
+                                    <Movie movie={thisMovie} posterUrl={poster_url} />
+                                </Link>
                             </li>
                         )
                     })
-
                     setMovies(tempMovieData)
-
                 }
             )
 

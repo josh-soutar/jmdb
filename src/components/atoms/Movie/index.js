@@ -19,7 +19,7 @@ font-size: 3;
 `
 
 export default function Movie({ movie, posterUrl }) {
-    const bgImageUrl = "url('" + posterUrl + movie.poster_path + "')"
+    const bgImageUrl = `url(${posterUrl}${movie.poster_path})`
 
     return (
         <MovieContainer>
