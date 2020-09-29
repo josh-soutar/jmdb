@@ -4,12 +4,10 @@ import { Link } from "gatsby"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const HeaderContainer = styled.div`
-background-color: #333333;
+max-width: 1300px;
+width: 100vw;
 display: flex;
 justify-content: space-between;
-padding: 1;
-padding-left: 40px;
-padding-right: 40px;
 align-items: center;
 `
 const HeaderMenuContainer = styled.box`
@@ -100,7 +98,11 @@ export default function Header() {
     }
 
     //Maybe we need to use useEffect somewhere here to fix the state value being fucked??
-    //Is it even necessary to use state here? can regular variables be used instead?
+
+    /* 
+    Still not sure how to guarantee the order setState and useEffect will run.    
+    Pretty sure this is broken because setState is asynchronous 
+    */
 
 
     let menuElements = menuItems.map(item => (
