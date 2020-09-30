@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 import Layout from "../layout";
-import { DateTime, Duration } from "luxon";
 import ColorThief from "colorthief";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ActionButton from "../components/atoms/ActionButton";
+import TitleFacts from "../components/atoms/TitleFacts";
+import Cast from "../components/molecules/Cast";
 
 const HeadingContent = styled.div`
   max-width: 1300px;
@@ -87,38 +88,6 @@ const ActionButtons = styled.div`
   display: flex;
 `;
 
-const FactsContainer = styled.div`
-  display: flex;
-  padding: 1 0;
-`;
-
-const FactsSeparator = styled.div`
-  :before {
-    content: "•";
-    padding: 0 5px;
-    font-weight: bold;
-  }
-`;
-
-const RunTime = styled.div``;
-
-const ReleaseDate = styled.div``;
-
-const Genres = styled.div`
-  display: flex;
-`;
-
-const Genre = styled.div`
-  ${({ last }) =>
-    !last &&
-    `
-    padding-right: 5px;
-    :after {
-      content: ",";
-    }
-`}
-`;
-
 const OverviewContainer = styled.div``;
 const Tagline = styled.div`
   font-style: italic;
@@ -128,8 +97,6 @@ const OverviewTitle = styled.div`
   padding: 1 0;
 `;
 const OverviewContent = styled.div``;
-
-const PosterContainer = styled.div``;
 
 const Poster = styled.div`
   width: 300px;
@@ -168,18 +135,10 @@ export default function ViewTitle() {
     )
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
-
         const titleBackdrop = `https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${result.backdrop_path}`;
         img.crossOrigin = "Anonymous"; //Cross origin needs to come before src!!
         img.src = titleBackdrop;
 
-        result.runtime = Duration.fromObject({
-          minutes: result.runtime,
-        }).toFormat("h'h' m'm'");
-        result.release_date = DateTime.fromISO(
-          result.release_date
-        ).toLocaleString(DateTime.DATE_FULL);
         setTitleData(result);
         setHeaderBgImage(`url('${titleBackdrop}')`);
       });
@@ -205,24 +164,11 @@ export default function ViewTitle() {
                 <SummaryInfo>
                   <Title>{titleData.title}</Title>
 
-                  <FactsContainer>
-                    <ReleaseDate>{titleData.release_date}</ReleaseDate>
-                    <FactsSeparator />
-                    <Genres>
-                      {titleData.genres.map((genre, index) => {
-                        return (
-                          <Genre
-                            key={index}
-                            last={index + 1 === titleData.genres.length}
-                          >
-                            {genre.name}
-                          </Genre>
-                        );
-                      })}
-                    </Genres>
-                    <FactsSeparator />
-                    <RunTime>{titleData.runtime}</RunTime>
-                  </FactsContainer>
+                  <TitleFacts
+                    genres={titleData.genres}
+                    releaseDate={titleData.release_date}
+                    runTime={titleData.runtime}
+                  />
 
                   <ScoreAndActions>
                     <UserScoreContainer>
@@ -248,8 +194,11 @@ export default function ViewTitle() {
               </HeadingContent>
             </HeaderInnerContainer>
           </HeaderContainer>
+
           <BodyContainer>
-            <BodyContent>this is the body</BodyContent>
+            <BodyContent>
+              <Cast title_id={titleData.id} />
+            </BodyContent>
           </BodyContainer>
         </>
       )}
