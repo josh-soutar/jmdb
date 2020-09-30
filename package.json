@@ -16,9 +16,11 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-regular-svg-icons": "^5.15.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@xstyled/styled-components": "^1.19.0",
+    "colorthief": "^2.3.2",
     "gatsby": "^2.24.63",
     "gatsby-source-filesystem": "^2.3.31",
     "luxon": "^1.25.0",
