@@ -207,6 +207,7 @@ export default function ViewTitle() {
 
   function _isDark(rgbArr) {
     const result = (rgbArr[0] * 299 + rgbArr[1] * 587 + rgbArr[2] * 114) / 1000;
-    return result < 128;
+    console.log("banner brightness: " + result);
+    return result < 200; // (0 to 255) Measure of how bright the image's primary colour is.
   }
 }
