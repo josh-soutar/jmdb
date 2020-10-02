@@ -26,7 +26,6 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: center;
   display: flex;
-  background-position: right -200px top;
   background-size: cover;
   background-repeat: no-repeat;
   background-image: ${(props) => props.bgImage};
@@ -122,7 +121,7 @@ export default function ViewTitle() {
 
   img.addEventListener("load", function () {
     const RGB = colorThief.getColor(img, 100);
-    const backgroundGradient = `linear-gradient(to right, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 1) 150px, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 0.5) 100%)`;
+    const backgroundGradient = `linear-gradient(to right, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 1) 0%, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 0.5) 100%)`;
     setHeaderBgGradient(backgroundGradient);
 
     setIsLoading(false);

@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 
+import Actor from "../../atoms/Actor";
+
 const CastContainer = styled.div`
   display: flex;
-`;
-
-const Actor = styled.div`
-  border: 1px solid;
-  border-radius: 2px;
-  margin: 0 1;
+  flex-wrap: wrap;
 `;
 
 export default function Cast({ title_id }) {
@@ -20,7 +17,7 @@ export default function Cast({ title_id }) {
     )
       .then((res) => res.json())
       .then((result) => {
-        console.log("log here" + result);
+        console.log(result);
         setCast(result.cast);
       });
   }, [title_id]);
@@ -28,7 +25,7 @@ export default function Cast({ title_id }) {
   return (
     <CastContainer>
       {cast.map((actor, index) => {
-        return <Actor key={index}>{actor.character}</Actor>;
+        return <Actor key={index} actor={actor} />;
       })}
     </CastContainer>
   );
