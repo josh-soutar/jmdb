@@ -2,8 +2,8 @@ const theme = {
   colors: {
     primaryBG: "#FDEFE6",
     secondaryBG: "#FFFFFF",
-    primaryText: '#f08e80',
-    secondaryText: "#FFFFFF"
+    darkText: "#f08e80",
+    lightText: "#FFFFFF",
   },
   fontSizes: [
     10, // 0
@@ -49,7 +49,7 @@ const theme = {
     180,
     190,
     200,
-  ]
-}
+  ],
+};
 
-export default theme
+export default theme;

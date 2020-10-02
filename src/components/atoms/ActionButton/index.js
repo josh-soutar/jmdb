@@ -15,14 +15,14 @@ const StyledActionButton = styled.div`
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: white;
+  color: ${(props) => props.color || "inherit"};
   font-size: 4;
 `;
 
-export default function ActionButton({ icon }) {
+export default function ActionButton({ icon, color }) {
   return (
     <StyledActionButton>
-      <StyledIcon icon={icon} />
+      <StyledIcon icon={icon} color={color} />
     </StyledActionButton>
   );
 }

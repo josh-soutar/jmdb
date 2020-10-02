@@ -29,6 +29,7 @@ const HeaderContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-image: ${(props) => props.bgImage};
+  color: ${(props) => (props.isDark ? "white" : "black")};
 `;
 
 const HeaderInnerContainer = styled.div`
@@ -115,20 +116,20 @@ export default function ViewTitle() {
   const img = new Image();
 
   const [titleData, setTitleData] = useState({ genres: [] }); //initialises with genres key so we don't get a js error in the map function on initial load
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [headerBgImage, setHeaderBgImage] = useState();
   const [headerBgGradient, setHeaderBgGradient] = useState();
+  const [headerIsDark, setHeaderIsDark] = useState(false);
 
   img.addEventListener("load", function () {
     const RGB = colorThief.getColor(img, 100);
+    setHeaderIsDark(_isDark(RGB));
     const backgroundGradient = `linear-gradient(to right, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 1) 0%, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 0.5) 100%)`;
     setHeaderBgGradient(backgroundGradient);
-
     setIsLoading(false);
   });
 
   useEffect(() => {
-    setIsLoading(true);
     fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US`
     )
@@ -156,7 +157,7 @@ export default function ViewTitle() {
         </LoadingContainer>
       ) : (
         <>
-          <HeaderContainer bgImage={headerBgImage}>
+          <HeaderContainer bgImage={headerBgImage} isDark={headerIsDark}>
             <HeaderInnerContainer bgGradient={headerBgGradient}>
               <HeadingContent>
                 <Poster bgImageUrl={poster_url} />
@@ -203,4 +204,9 @@ export default function ViewTitle() {
       )}
     </Layout>
   );
+
+  function _isDark(rgbArr) {
+    const result = (rgbArr[0] * 299 + rgbArr[1] * 587 + rgbArr[2] * 114) / 1000;
+    return result < 128;
+  }
 }
