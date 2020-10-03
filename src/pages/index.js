@@ -72,8 +72,10 @@ export default function IndexPage() {
       <SearchOuterContainer bgImage={searchBannerImg}>
         <SearchInnerContainer>
           <SearchText>
-            <SearchTextHeading>Search</SearchTextHeading>
-            <SearchTextSubheading>Subheading</SearchTextSubheading>
+            <SearchTextHeading>Josh's Movie Database</SearchTextHeading>
+            <SearchTextSubheading>
+              The #2 source for Movie, TV and celebrity content
+            </SearchTextSubheading>
           </SearchText>
           <HomepageSearch />
         </SearchInnerContainer>
