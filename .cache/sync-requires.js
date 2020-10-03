@@ -9,6 +9,7 @@ exports.components = {
   "component---src-pages-404-js": hot(preferDefault(require("/Users/josh.soutar/Documents/React/jmdb/src/pages/404.js"))),
   "component---src-pages-index-js": hot(preferDefault(require("/Users/josh.soutar/Documents/React/jmdb/src/pages/index.js"))),
   "component---src-pages-placeholder-js": hot(preferDefault(require("/Users/josh.soutar/Documents/React/jmdb/src/pages/placeholder.js"))),
+  "component---src-pages-search-js": hot(preferDefault(require("/Users/josh.soutar/Documents/React/jmdb/src/pages/search.js"))),
   "component---src-templates-title-js": hot(preferDefault(require("/Users/josh.soutar/Documents/React/jmdb/src/templates/title.js")))
 }
 

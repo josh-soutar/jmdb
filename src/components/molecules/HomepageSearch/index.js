@@ -1,27 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { navigate } from "gatsby";
 import styled from "@xstyled/styled-components";
-import CustomButton from "../../atoms/InputButton";
-import CustomInput from "../../atoms/InputText";
+
+const HomepageSearchContainer = styled.div`
+  display: flex;
+  width: 100%;
+`;
 
 const StyledForm = styled.form`
   display: flex;
   padding: 20px;
   margin: 0 auto;
-  max-width: 500px;
   width: 100%;
 `;
 
+const StyledInput = styled.input`
+  width: 100%;
+  padding: 20px;
+  font-size: 4;
+`;
+
+const StyledButton = styled.input`
+  padding: 20px;
+  font-size: 4;
+`;
+
 export default function HomepageSearch() {
-  const placeholder = "test";
+  const [searchTerm, setSearchTerm] = useState("");
+
   function handleSubmit(event) {
     event.preventDefault();
-    alert("submit entered with " + event.target.value);
+    //This isn't carrying the search value
+
+    navigate(`/search?query=${searchTerm}`);
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <CustomInput placeholder={placeholder} />
-      <CustomButton btnLabel="Search" />
-    </StyledForm>
+    <HomepageSearchContainer>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledInput
+          type="text"
+          placeholder="Search for Movies, TV Shows, People"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <StyledButton type="submit" value="Search" />
+      </StyledForm>
+    </HomepageSearchContainer>
   );
 }
