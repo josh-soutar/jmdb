@@ -33,13 +33,7 @@ export default function SearchPage() {
       // ...
     }
     fetchData();
-
-    //console.log("allResults updated to ", allResults); //This is an empty object on first run. How can I update this synchronously?
   });
-
-  //   useEffect(() => {
-  //     console.log("allResults", allResults);
-  //   }, [allResults]);
 
   return (
     <Layout>
@@ -47,7 +41,6 @@ export default function SearchPage() {
         <SearchResultsInnerContainer>
           {allResults && (
             <>
-              lol
               <SearchResultCategories results={allResults} />
               {
                 //<SearchResultsList query={searchTerm} results={allResults} />

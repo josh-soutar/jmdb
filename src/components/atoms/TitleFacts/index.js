@@ -4,7 +4,6 @@ import { DateTime, Duration } from "luxon";
 
 const FactsContainer = styled.div`
   display: flex;
-  padding: 1 0;
 `;
 
 const FactsSeparator = styled.div`

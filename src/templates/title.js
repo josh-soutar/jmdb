@@ -7,19 +7,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ActionButton from "../components/atoms/ActionButton";
 import TitleFacts from "../components/atoms/TitleFacts";
 import Cast from "../components/molecules/Cast";
+import RatingDial from "../components/atoms/RatingDial";
+import ReleaseInfo from "../components/atoms/ReleaseInfo";
+import { Spring } from "react-spring/renderprops";
 
 const HeadingContent = styled.div`
   max-width: 1300px;
   width: 100vw;
   display: flex;
 `;
-
 const BodyContent = styled.div`
   max-width: 1300px;
   width: 100vw;
   display: flex;
+  align-items: flex-start;
 `;
-
 const HeaderContainer = styled.div`
   width: 100%;
   position: relative;
@@ -31,7 +33,6 @@ const HeaderContainer = styled.div`
   background-image: ${(props) => props.bgImage};
   color: ${(props) => (props.isDark ? "white" : "black")};
 `;
-
 const HeaderInnerContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -40,7 +41,6 @@ const HeaderInnerContainer = styled.div`
   width: 100%;
   background-image: ${(props) => props.bgGradient};
 `;
-
 const BodyContainer = styled.div`
   width: 100%;
   display: flex;
@@ -48,16 +48,16 @@ const BodyContainer = styled.div`
   padding: 30px;
   display: flex;
 `;
-
 const SummaryInfo = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 30px;
+  justify-content: center;
 `;
 const Title = styled.h1`
   font-weight: bold;
+  padding-bottom: 5px;
 `;
-
 const LoadingContainer = styled.div`
   font-size: 22px;
   font-weight: bold;
@@ -66,28 +66,20 @@ const LoadingContainer = styled.div`
   height: 500px;
   justify-content: center;
 `;
-
 const StyledIcon = styled(FontAwesomeIcon)`
   margin-right: 1;
 `;
-
 const ScoreAndActions = styled.div`
   display: flex;
   align-items: center;
+  padding: 2 0;
 `;
-
 const UserScoreContainer = styled.div`
   display: flex;
 `;
-
-const UserScoreRating = styled.div``;
-
-const UserScoreText = styled.div``;
-
 const ActionButtons = styled.div`
   display: flex;
 `;
-
 const OverviewContainer = styled.div``;
 const Tagline = styled.div`
   font-style: italic;
@@ -97,7 +89,6 @@ const OverviewTitle = styled.div`
   padding: 1 0;
 `;
 const OverviewContent = styled.div``;
-
 const Poster = styled.div`
   width: 300px;
   min-width: 300px;
@@ -124,7 +115,8 @@ export default function ViewTitle() {
   img.addEventListener("load", function () {
     const RGB = colorThief.getColor(img, 100);
     setHeaderIsDark(_isDark(RGB));
-    const backgroundGradient = `linear-gradient(to right, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 1) 0%, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 0.5) 100%)`;
+    //const backgroundGradient = `linear-gradient(to right, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 1) 0%, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 0.5) 100%)`;
+    const backgroundGradient = `radial-gradient(rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 0.8) 50%, rgba(${RGB[0]}, ${RGB[1]}, ${RGB[2]}, 0.5))`;
     setHeaderBgGradient(backgroundGradient);
     setIsLoading(false);
   });
@@ -138,7 +130,6 @@ export default function ViewTitle() {
         const titleBackdrop = `https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${result.backdrop_path}`;
         img.crossOrigin = "Anonymous"; //Cross origin needs to come before src!!
         img.src = titleBackdrop;
-
         setTitleData(result);
         setHeaderBgImage(`url('${titleBackdrop}')`);
       });
@@ -172,16 +163,24 @@ export default function ViewTitle() {
 
                   <ScoreAndActions>
                     <UserScoreContainer>
-                      <UserScoreRating>
-                        {titleData.vote_average}
-                      </UserScoreRating>
-                      <UserScoreText>User Score</UserScoreText>
+                      <Spring
+                        config={{ delay: 300 }}
+                        from={{ value: 0 }}
+                        to={{ value: titleData.vote_average }}
+                      >
+                        {(props) => (
+                          <RatingDial
+                            staticScore={titleData.vote_average}
+                            animatedScore={props.value}
+                          ></RatingDial>
+                        )}
+                      </Spring>
                     </UserScoreContainer>
 
                     <ActionButtons>
-                      <ActionButton icon={["far", "list-alt"]} />
-                      <ActionButton icon="heart" />
-                      <ActionButton icon="bookmark" />
+                      <ActionButton icon={["far", "list-alt"]} color="white" />
+                      <ActionButton icon="heart" color="white" />
+                      <ActionButton icon="bookmark" color="white" />
                     </ActionButtons>
                   </ScoreAndActions>
 
@@ -198,6 +197,7 @@ export default function ViewTitle() {
           <BodyContainer>
             <BodyContent>
               <Cast title_id={titleData.id} />
+              <ReleaseInfo titleData={titleData} />
             </BodyContent>
           </BodyContainer>
         </>
@@ -207,7 +207,6 @@ export default function ViewTitle() {
 
   function _isDark(rgbArr) {
     const result = (rgbArr[0] * 299 + rgbArr[1] * 587 + rgbArr[2] * 114) / 1000;
-    console.log("banner brightness: " + result);
     return result < 200; // (0 to 255) Measure of how bright the image's primary colour is.
   }
 }

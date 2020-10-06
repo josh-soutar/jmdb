@@ -18,15 +18,9 @@ const Category = styled.div`
 
 export default function SearchResultCategories({ results }) {
   console.log("received results in category", results);
-  //   const [categories, setCategories] = useState(null);
-
-  //   useEffect(() => {
-  //     setCategories(results);
-  //   }, [results]);
 
   return (
     <Container>
-      lolilol
       {results.map((category, index) => {
         return (
           <Category key={index} last={results.length == index + 1}>

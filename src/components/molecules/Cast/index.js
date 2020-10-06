@@ -3,9 +3,21 @@ import styled from "@xstyled/styled-components";
 
 import Actor from "../../atoms/Actor";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1000px;
+`;
+
 const CastContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  margin-right: 1;
+`;
+
+const Heading = styled.h2`
+  font-weight: bold;
 `;
 
 export default function Cast({ title_id }) {
@@ -23,10 +35,13 @@ export default function Cast({ title_id }) {
   }, [title_id]);
 
   return (
-    <CastContainer>
-      {cast.map((actor, index) => {
-        return <Actor key={index} actor={actor} />;
-      })}
-    </CastContainer>
+    <Container>
+      <Heading>Cast</Heading>
+      <CastContainer>
+        {cast.map((actor, index) => {
+          return <Actor key={index} first={index == 0} actor={actor} />;
+        })}
+      </CastContainer>
+    </Container>
   );
 }
