@@ -7,26 +7,33 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const ResultsList = styled.ul``;
+const ResultsList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
 
-const ResultsListItem = styled.li``;
+const ResultsListItem = styled.li`
+  border: 1px solid;
+  margin: 1 0;
+`;
 
-export default function SearchResultList({ query, results }) {
+export default function SearchResultList({ resultsList }) {
   /*
     Different result types e.g. movie/tv/person have different object structure. Need to take into 
-    consideration which result typoe has been selected when outputting results
+    consideration which result type has been selected when outputting results
     */
+
+  console.log("Data received in list ", resultsList);
 
   return (
     <Container>
       <ResultsList>
-        {/*
-        results.map((result, index) => (
-          <ResultsListItem key={index}>
-            <div>{result.id}</div>
-          </ResultsListItem>
-        ))
-        */}
+        {resultsList &&
+          resultsList.results.map((result, index) => (
+            <ResultsListItem key={index}>
+              <div>{result.id}</div>
+            </ResultsListItem>
+          ))}
       </ResultsList>
     </Container>
   );

@@ -3,7 +3,7 @@ import styled from "@xstyled/styled-components";
 import Layout from "../layout";
 
 import SearchResultCategories from "../components/molecules/SearchResultCategories";
-import SearchResultsList from "../components/molecules/SearchResultsList";
+import SearchResultList from "../components/molecules/SearchResultsList";
 
 const SearchResultsOuterContainer = styled.div`
   display: flex;
@@ -16,74 +16,79 @@ const SearchResultsInnerContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 `;
 
 export default function SearchPage() {
   const URLparam = new URLSearchParams(document.location.search.substring(1));
   const searchTerm = URLparam.get("query");
 
-  const [allResults, setAllResults] = useState(null);
+  const [resultsCategories, setResultsCategories] = useState();
+  const [resultsList, setResultsList] = useState();
 
   useEffect(() => {
-    async function fetchData() {
-      // You can await here
-      const response = await _getAllSearchResults();
-      console.log("after response", response);
-      setAllResults(response);
-      // ...
-    }
-    fetchData();
-  });
+    getAllSearchResults();
+  }, [searchTerm]);
 
   return (
     <Layout>
       <SearchResultsOuterContainer>
         <SearchResultsInnerContainer>
-          {allResults && (
-            <>
-              <SearchResultCategories results={allResults} />
-              {
-                //<SearchResultsList query={searchTerm} results={allResults} />
-              }
-            </>
-          )}
+          <SearchResultCategories resultsCategories={resultsCategories} />
+          <SearchResultList resultsList={resultsList} />
         </SearchResultsInnerContainer>
       </SearchResultsOuterContainer>
     </Layout>
   );
 
-  function _getAllSearchResults() {
+  function getAllSearchResults() {
     let results = [];
 
     const queries = [
       {
         label: "All",
         api_call: `https://api.themoviedb.org/3/search/multi?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&query=${searchTerm}`,
+        order: 1,
+        selected: true,
       },
       {
         label: "Movies",
         api_call: `https://api.themoviedb.org/3/search/movie?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&query=${searchTerm}`,
+        order: 2,
+        selected: false,
       },
       {
         label: "TV Shows",
         api_call: `https://api.themoviedb.org/3/search/tv?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&query=${searchTerm}`,
+        order: 3,
+        selected: false,
       },
       {
         label: "People",
         api_call: `https://api.themoviedb.org/3/search/person?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&query=${searchTerm}`,
+        order: 4,
+        selected: false,
       },
     ];
 
-    //Trigger each API call and save result to results array
-    queries.forEach((query) => {
+    for (let i = 0; i < queries.length; i++) {
+      let query = queries[i];
       fetch(query.api_call)
         .then((res) => res.json())
         .then((r) => {
           r.label = query.label;
+          r.order = query.order;
+          r.selected = query.selected;
+          r.api_call = query.api_call; //Used to get additional pages of results
           results.push(r);
+        })
+        .then(() => {
+          if (results.length == queries.length) {
+            //If we've finished calling each API endpoint
+            setResultsCategories(results); //set state. This will cause child components to update
+            setResultsList(results[0]);
+          }
         });
-    });
-
-    return results;
+    }
   }
 }
