@@ -19,6 +19,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@reduxjs/toolkit": "^1.4.0",
     "@xstyled/styled-components": "^1.19.0",
     "colorthief": "^2.3.2",
     "gatsby": "^2.24.63",
@@ -27,6 +28,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-number-format": "^4.4.1",
+    "react-redux": "^7.2.1",
     "react-spring": "^8.0.27",
     "styled-components": "^5.2.0"
   },
