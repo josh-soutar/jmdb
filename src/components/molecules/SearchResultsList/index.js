@@ -23,8 +23,6 @@ export default function SearchResultList({ resultsList }) {
     consideration which result type has been selected when outputting results
     */
 
-  console.log("Data received in list ", resultsList);
-
   return (
     <Container>
       <ResultsList>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 import Layout from "../layout";
+import { connect } from "react-redux";
 
 import SearchResultCategories from "../components/molecules/SearchResultCategories";
 import SearchResultList from "../components/molecules/SearchResultsList";
@@ -19,7 +20,7 @@ const SearchResultsInnerContainer = styled.div`
   align-items: flex-start;
 `;
 
-export default function SearchPage() {
+function SearchPage(props) {
   const URLparam = new URLSearchParams(document.location.search.substring(1));
   const searchTerm = URLparam.get("query");
 
@@ -29,6 +30,8 @@ export default function SearchPage() {
   useEffect(() => {
     getAllSearchResults();
   }, [searchTerm]);
+
+  console.log("props received are ", props);
 
   return (
     <Layout>
@@ -92,3 +95,11 @@ export default function SearchPage() {
     }
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+  };
+};
+
+export default connect(mapStateToProps)(SearchPage);

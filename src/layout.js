@@ -11,9 +11,7 @@ import {
 import { faListAlt } from "@fortawesome/free-regular-svg-icons";
 
 import Header from "./components/molecules/Header";
-
 import "./global.css";
-
 import theme from "./theme.js";
 
 const PageWrapper = styled.div`
