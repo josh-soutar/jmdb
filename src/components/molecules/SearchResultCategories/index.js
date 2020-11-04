@@ -16,19 +16,24 @@ const Category = styled.div`
   padding: 1;
   border-bottom: ${(props) => (props.last ? "0" : "1px solid")};
   font-weight: ${(props) => (props.selected ? "bold" : "normal")};
+  &:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+    font-weight: bold;
+  }
 `;
 
 function SearchResultCategories(props) {
-  const resultsCategories = props.search_results;
-
   const handleClick = (chosen_category) => {
     props.selectSearchResultCategory(chosen_category);
   };
 
+  //Not sure why this isn't rerendering when the 'selected' prop is changed via selectSearchResultCategory
+
   return (
     <Container>
-      {resultsCategories &&
-        resultsCategories.map((category, index) => {
+      {props.search_results &&
+        props.search_results.map((category, index) => {
           console.log("category data ", category);
           return (
             <Category
@@ -37,7 +42,7 @@ function SearchResultCategories(props) {
               }}
               key={index}
               selected={category.selected}
-              last={resultsCategories.length == index + 1}
+              last={props.search_results.length === index + 1}
             >
               <div>
                 {category.label} <br />
