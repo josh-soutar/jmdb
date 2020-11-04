@@ -32,8 +32,8 @@ function SearchResultCategories(props) {
 
   return (
     <Container>
-      {props.search_results &&
-        props.search_results.map((category, index) => {
+      {props.parentProps &&
+        props.parentProps.map((category, index) => {
           console.log("category data ", category);
           return (
             <Category
@@ -42,11 +42,11 @@ function SearchResultCategories(props) {
               }}
               key={index}
               selected={category.selected}
-              last={props.search_results.length === index + 1}
+              last={props.parentProps.length === index + 1}
             >
               <div>
                 {category.label} <br />
-                selected: {JSON.stringify(category.selected)}
+                {JSON.stringify(category.selected)}
               </div>
               <div>{category.total_results}</div>
             </Category>

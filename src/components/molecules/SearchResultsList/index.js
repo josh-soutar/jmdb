@@ -16,6 +16,29 @@ const ResultsList = styled.ul`
 const ResultsListItem = styled.li`
   border: 1px solid;
   margin: 1 0;
+  display: flex;
+  padding: 1;
+`;
+
+const Title = styled.div`
+  font-weight: bold;
+  padding-bottom: 1;
+`;
+
+const Overview = styled.div``;
+
+const Poster = styled.div`
+  min-width: 94px;
+  min-height: 141px;
+  background-image: ${(props) => props.imageUrl};
+  background-size: contain;
+  background-repeat: no-repeat;
+`;
+
+const TextSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 1;
 `;
 
 function SearchResultList(props) {
@@ -30,8 +53,20 @@ function SearchResultList(props) {
       <ResultsList>
         {resultsList &&
           resultsList.results.map((result, index) => (
-            <ResultsListItem key={index}>
-              <div>{result.id}</div>
+            <ResultsListItem className="searchResult" key={index}>
+              <Poster
+                imageUrl={
+                  result.poster_path
+                    ? "url('https://image.tmdb.org/t/p/w94_and_h141_bestv2" +
+                      result.poster_path +
+                      "')"
+                    : "url('https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg')"
+                }
+              ></Poster>
+              <TextSection>
+                <Title>{result.original_name}</Title>
+                <Overview>{result.overview}</Overview>
+              </TextSection>
             </ResultsListItem>
           ))}
       </ResultsList>
@@ -44,7 +79,6 @@ const mapStateToProps = (state) => {
     (result_category) => result_category.selected === true
   );
   return {
-    ...state,
     search_results: selected_list[0],
   };
 };
