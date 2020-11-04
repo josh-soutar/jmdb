@@ -31,14 +31,12 @@ function SearchPage(props) {
     getAllSearchResults();
   }, [searchTerm]);
 
-  console.log("props received are ", props);
-
   return (
     <Layout>
       <SearchResultsOuterContainer>
         <SearchResultsInnerContainer>
-          <SearchResultCategories resultsCategories={resultsCategories} />
-          <SearchResultList resultsList={resultsList} />
+          <SearchResultCategories />
+          <SearchResultList />
         </SearchResultsInnerContainer>
       </SearchResultsOuterContainer>
     </Layout>
@@ -90,6 +88,7 @@ function SearchPage(props) {
             //If we've finished calling each API endpoint
             setResultsCategories(results); //set state. This will cause child components to update
             setResultsList(results[0]);
+            props.updateSearchResutls(results);
           }
         });
     }
@@ -98,8 +97,19 @@ function SearchPage(props) {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts,
+    ...state,
   };
 };
 
-export default connect(mapStateToProps)(SearchPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSearchResutls: (search_results) => {
+      dispatch({
+        type: "UPDATED_SEARCH_RESULTS",
+        search_results: search_results,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "@xstyled/styled-components";
+import { connect } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -17,11 +18,12 @@ const ResultsListItem = styled.li`
   margin: 1 0;
 `;
 
-export default function SearchResultList({ resultsList }) {
+function SearchResultList(props) {
   /*
     Different result types e.g. movie/tv/person have different object structure. Need to take into 
     consideration which result type has been selected when outputting results
     */
+  const resultsList = props.search_results;
 
   return (
     <Container>
@@ -36,3 +38,15 @@ export default function SearchResultList({ resultsList }) {
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  const selected_list = state.search_results.filter(
+    (result_category) => result_category.selected === true
+  );
+  return {
+    ...state,
+    search_results: selected_list[0],
+  };
+};
+
+export default connect(mapStateToProps)(SearchResultList);
