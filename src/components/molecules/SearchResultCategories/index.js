@@ -34,7 +34,7 @@ function SearchResultCategories(props) {
     <Container>
       {props.parentProps &&
         props.parentProps.map((category, index) => {
-          console.log("category data ", category);
+          //console.log("category data ", category);
           return (
             <Category
               onClick={() => {
