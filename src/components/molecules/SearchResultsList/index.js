@@ -26,7 +26,8 @@ function SearchResultList(props) {
   return (
     <Container>
       <ResultsList>
-        {resultsList && resultsList.results.map((result, index) => <SearchResultItem type={resultsList.label} data={result} key={index} />)}
+        {resultsList &&
+          resultsList.results.map((result, index) => <SearchResultItem isFirst={index === 0} type={resultsList.label} data={result} key={index} />)}
       </ResultsList>
     </Container>
   );

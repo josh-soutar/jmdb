@@ -4,7 +4,7 @@ import PersonCredits from "../../atoms/PersonCredits";
 
 const ResultsListItem = styled.li`
   border: 1px solid;
-  margin: 1 0;
+  margin: ${(props) => (props.isFirst ? "0 0 10px 0" : "10px 0")};
   display: flex;
   padding: 1;
 `;
@@ -30,7 +30,7 @@ const TextSection = styled.div`
   padding: 0 1;
 `;
 
-export default function SearchResultItem({ type, data }) {
+export default function SearchResultItem({ isFirst, type, data }) {
   /* Movies/TV SHows/People have different key names for their data
   resultKeyMaps standardises key names across all result types*/
   const keyMap = {
@@ -55,7 +55,7 @@ export default function SearchResultItem({ type, data }) {
   }
 
   return (
-    <ResultsListItem className="searchResult">
+    <ResultsListItem className="searchResult" isFirst={isFirst}>
       <Poster imageUrl={data.imagePath}></Poster>
 
       <TextSection>
