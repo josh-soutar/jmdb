@@ -28,12 +28,25 @@ function SearchResultCategories(props) {
     props.selectSearchResultCategory(chosen_category);
   };
 
+  //Sort the categories based on 'order' key value
+  function compare(a, b) {
+    if (a.order < b.order) {
+      return -1;
+    }
+    if (a.order > b.order) {
+      return 1;
+    }
+    return 0;
+  }
+
+  props.search_results.sort(compare);
+
   //Not sure why this isn't rerendering when the 'selected' prop is changed via selectSearchResultCategory
 
   return (
     <Container>
-      {props.parentProps &&
-        props.parentProps.map((category, index) => {
+      {props.search_results &&
+        props.search_results.map((category, index) => {
           //console.log("category data ", category);
           return (
             <Category
@@ -42,7 +55,7 @@ function SearchResultCategories(props) {
               }}
               key={index}
               selected={category.selected}
-              last={props.parentProps.length === index + 1}
+              last={props.search_results.length === index + 1}
             >
               <div>
                 {category.label} <br />
@@ -73,7 +86,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SearchResultCategories);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResultCategories);

@@ -35,7 +35,7 @@ function SearchPage(props) {
     <Layout>
       <SearchResultsOuterContainer>
         <SearchResultsInnerContainer>
-          <SearchResultCategories parentProps={props.search_results} />
+          <SearchResultCategories />
           <SearchResultList />
         </SearchResultsInnerContainer>
       </SearchResultsOuterContainer>
