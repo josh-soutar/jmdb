@@ -1,3 +1,5 @@
+/* Don't think we need this as we aren't creating static pages based on all possible titles.
+
 const path = require("path")
 
 exports.onCreatePage = async ({ page, actions }) => {
@@ -9,3 +11,4 @@ exports.onCreatePage = async ({ page, actions }) => {
         component: path.resolve(`src/templates/title.js`)
     })
 }
+*/

@@ -53,9 +53,7 @@ export default function IndexPage() {
   const [searchBannerImg, setSearchBannerImg] = useState("");
 
   useEffect(() => {
-    fetch(
-      "https://api.themoviedb.org/3/trending/movie/day?api_key=674d2d5130dd9ac19dc844ac2be0895a"
-    )
+    fetch("https://api.themoviedb.org/3/trending/movie/day?api_key=674d2d5130dd9ac19dc844ac2be0895a")
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -73,9 +71,7 @@ export default function IndexPage() {
         <SearchInnerContainer>
           <SearchText>
             <SearchTextHeading>Josh's Movie Database</SearchTextHeading>
-            <SearchTextSubheading>
-              The #2 source for Movie, TV and celebrity content
-            </SearchTextSubheading>
+            <SearchTextSubheading>The #2 source for Movie, TV and celebrity content</SearchTextSubheading>
           </SearchText>
           <HomepageSearch />
         </SearchInnerContainer>

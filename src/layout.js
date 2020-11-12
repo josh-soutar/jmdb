@@ -2,13 +2,9 @@ import React from "react";
 import styled, { ThemeProvider } from "@xstyled/styled-components";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faTicketAlt,
-  faHeart,
-  faBookmark,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTicketAlt, faHeart, faBookmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faListAlt } from "@fortawesome/free-regular-svg-icons";
+import { Helmet } from "react-helmet";
 
 import Header from "./components/molecules/Header";
 import "./global.css";
@@ -42,24 +38,17 @@ export default function Layout({ children }) {
   }
 
   async function getConfigData() {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/configuration?api_key=674d2d5130dd9ac19dc844ac2be0895a"
-    ).then((r) => r.json());
+    const data = await fetch("https://api.themoviedb.org/3/configuration?api_key=674d2d5130dd9ac19dc844ac2be0895a").then((r) => r.json());
     localStorage.setItem("tmdb_config", JSON.stringify(data));
-    localStorage.setItem(
-      "poster_url",
-      data.images.base_url + data.images.poster_sizes[4]
-    );
-    localStorage.setItem(
-      "background_url",
-      "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces"
-    );
+    localStorage.setItem("poster_url", data.images.base_url + data.images.poster_sizes[4]);
+    localStorage.setItem("background_url", "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces");
   }
 
   library.add(faTicketAlt, faListAlt, faHeart, faBookmark, faSpinner);
 
   return (
     <ThemeProvider theme={theme}>
+      <Helmet title="JMDB" defer={false} />
       <PageWrapper className="pageWrapper">
         <HeaderContainer>
           <Header />
