@@ -21,8 +21,6 @@ function SearchResultList(props) {
     */
   const resultsList = props.search_results || "";
 
-  console.log(resultsList);
-
   return (
     <Container>
       <ResultsList>

@@ -1,12 +1,17 @@
 import React from "react";
 import styled from "@xstyled/styled-components";
 import PersonCredits from "../../atoms/PersonCredits";
+import { navigate } from "@reach/router";
 
 const ResultsListItem = styled.li`
   border: 1px solid;
   margin: ${(props) => (props.isFirst ? "0 0 10px 0" : "10px 0")};
   display: flex;
   padding: 1;
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
 `;
 
 const Title = styled.div`
@@ -54,10 +59,24 @@ export default function SearchResultItem({ isFirst, type, data }) {
       : "url('https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg')";
   }
 
-  return (
-    <ResultsListItem className="searchResult" isFirst={isFirst}>
-      <Poster imageUrl={data.imagePath}></Poster>
+  const handleClick = () => {
+    //redirect to title page based on if clicking movie, tv show or person
+    console.log(`in ${type} onClick`, data);
 
+    if (type == "Movies" || (type === "All" && data.media_type === "movie")) {
+      navigate(`/title?id=${data.id}`);
+    }
+  };
+
+  return (
+    <ResultsListItem
+      className="searchResult"
+      isFirst={isFirst}
+      onClick={() => {
+        handleClick();
+      }}
+    >
+      <Poster imageUrl={data.imagePath}></Poster>
       <TextSection>
         <Title>{data[keyMap.name]}</Title>
         {type !== "People" && <Overview>{data.overview}</Overview>}

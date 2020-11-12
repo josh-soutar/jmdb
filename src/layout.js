@@ -14,11 +14,11 @@ const PageWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-flow: column;
-  width: 100vw;
+  width: 100%;
 `;
 
 const HeaderContainer = styled.header`
-  width: 100vw;
+  width: 100%;
   background-color: #333333;
   display: flex;
   justify-content: center;
@@ -26,7 +26,7 @@ const HeaderContainer = styled.header`
 `;
 
 const ContentWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;

@@ -14,7 +14,7 @@ const Category = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1;
-  border-bottom: ${(props) => (props.last ? "0" : "1px solid")};
+  border-top: ${(props) => (props.first ? "0" : "1px solid")};
   font-weight: ${(props) => (props.selected ? "bold" : "normal")};
   &:hover {
     cursor: pointer;
@@ -24,10 +24,6 @@ const Category = styled.div`
 `;
 
 function SearchResultCategories(props) {
-  const handleClick = (chosen_category) => {
-    props.selectSearchResultCategory(chosen_category);
-  };
-
   //Sort the categories based on 'order' key value
   function compare(a, b) {
     if (a.order < b.order) {
@@ -39,39 +35,42 @@ function SearchResultCategories(props) {
     return 0;
   }
 
-  props.search_results.sort(compare);
+  if (props && props.search_results) {
+    props.search_results.sort(compare);
+  }
 
-  //Not sure why this isn't rerendering when the 'selected' prop is changed via selectSearchResultCategory
+  const handleClick = (chosen_category) => {
+    props.selectSearchResultCategory(chosen_category);
+  };
 
   return (
     <Container>
       {props.search_results &&
         props.search_results.map((category, index) => {
-          //console.log("category data ", category);
-          return (
-            <Category
-              onClick={() => {
-                handleClick(category.label);
-              }}
-              key={index}
-              selected={category.selected}
-              last={props.search_results.length === index + 1}
-            >
-              <div>
-                {category.label} <br />
-                {JSON.stringify(category.selected)}
-              </div>
-              <div>{category.total_results}</div>
-            </Category>
-          );
+          if (category.total_results > 0) {
+            return (
+              <Category
+                onClick={() => {
+                  handleClick(category.label);
+                }}
+                key={category.label}
+                selected={category.selected}
+                first={index === 0}
+              >
+                <div>{category.label}</div>
+                <div>{category.total_results}</div>
+              </Category>
+            );
+          }
         })}
     </Container>
   );
 }
 
 const mapStateToProps = (state) => {
+  const newState = { ...state };
   return {
-    ...state,
+    search_results: newState.search_results,
   };
 };
 

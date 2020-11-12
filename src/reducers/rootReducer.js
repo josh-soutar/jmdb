@@ -9,16 +9,20 @@ const rootReducer = (state = initialState, action) => {
       ...state,
       search_results: action.search_results,
     };
-  }
-
-  if (action.type === "SELECTED_SEARCH_CATEGORY") {
-    const updatedState = {
+  } else if (action.type === "SELECTED_SEARCH_CATEGORY") {
+    const stateClone = {
       ...state,
+      search_results: [...state.search_results],
     };
-    updatedState.search_results.forEach((result) => {
-      result.selected = result.label == action.chosen_category;
+    //Update search_results with updated 'selected' value on chosen category
+    stateClone.search_results.forEach((result) => {
+      result.selected = result.label === action.chosen_category;
     });
-    return updatedState;
+
+    return {
+      ...state,
+      search_results: stateClone.search_results,
+    };
   }
 
   return state;

@@ -8,6 +8,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 300px;
   padding: 1;
+  border: 1px solid lightgrey;
 `;
 
 const InfoContainer = styled.div`
@@ -34,24 +35,14 @@ export default function ReleaseInfo({ titleData }) {
       {titleData.budget != 0 && (
         <InfoContainer>
           <Heading>Budget</Heading>
-          <NumberFormat
-            value={titleData.budget}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"$"}
-          />
+          <NumberFormat value={titleData.budget} displayType={"text"} thousandSeparator={true} prefix={"$"} />
         </InfoContainer>
       )}
 
       {titleData.revenue != 0 && (
         <InfoContainer>
           <Heading>Box office</Heading>
-          <NumberFormat
-            value={titleData.revenue}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"$"}
-          />
+          <NumberFormat value={titleData.revenue} displayType={"text"} thousandSeparator={true} prefix={"$"} />
         </InfoContainer>
       )}
 
