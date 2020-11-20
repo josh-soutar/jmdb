@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 import Layout from "../layout";
-import PopularMovies from "../components/molecules/PopularMovies";
+import PopularItems from "../components/molecules/PopularItems";
 import HomepageSearch from "../components/molecules/HomepageSearch";
 
 const MovieListOuterContainer = styled.div`
@@ -79,7 +79,7 @@ export default function IndexPage() {
 
       <MovieListOuterContainer>
         <MovieListInnerContainer>
-          <PopularMovies />
+          <PopularItems />
         </MovieListInnerContainer>
       </MovieListOuterContainer>
     </Layout>
