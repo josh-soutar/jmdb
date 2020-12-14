@@ -80,9 +80,12 @@ export default function Header() {
     setMenuOutlineWidth(event.target.offsetWidth);
     setMenuOutlineOffset(event.target.offsetLeft);
 
+    /*
     console.log(
       `${event.target.id}  width: ${event.target.offsetWidth} offset: ${event.target.offsetLeft}`
     ); //Sometimes the ID isn't getting passed. This causes width and offset values to be incorrect
+
+    */
 
     let tempMenuItems = menuItems;
     for (let i = 0; i < tempMenuItems.length; i++) {

@@ -1,31 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 
 export default function PopularItemsTypeSelector() {
   const titleRef = React.createRef();
   const containerRef = React.createRef();
+  const ref1 = React.createRef(); //Movies
+  const ref2 = React.createRef(); //TV Shows
+  const ref3 = React.createRef(); //People
+  const [underlineX, setUnderlineX] = useState(0);
+  const [underlineWidth, setUnderlineWidth] = useState(0);
+  const [xStart, setXStart] = useState(0);
 
-  function handleHover(direction) {
-    console.log("Testing access to ref", titleRef.current.getBoundingClientRect());
+  useEffect(() => {
+    setXStart(titleRef.current.getBoundingClientRect().right);
+    setUnderlineWidth(Math.ceil(ref1.current.getBoundingClientRect().width));
+  }, []);
 
-    /* get the position of the rightmost point of Title. Calculate how mant pixels away this Type is from the end of Title
-    Update state so the underline's position is moved to this position
-    Also can get the width of the type this way
-    */
+  function handleHover(e, direction) {
+    let eLeft = e.current.getBoundingClientRect().left;
+    setUnderlineX(eLeft - xStart);
+    setUnderlineWidth(Math.ceil(e.current.getBoundingClientRect().width));
   }
 
   return (
     <PopularItemsTypeSelectorContainer ref={containerRef}>
       <Title ref={titleRef}>Popular </Title>
       <TypesContainer>
-        <TypesSlidingUnderline />
-        <Type value="movies" onMouseEnter={() => handleHover("enter")} onMouseLeave={() => handleHover("leave")}>
+        <TypesSlidingUnderline underlineX={underlineX + "px"} underlineWidth={underlineWidth + "px"}></TypesSlidingUnderline>
+        <Type value="movies" ref={ref1} onMouseEnter={() => handleHover(ref1, "enter")} onMouseLeave={() => handleHover(ref1, "leave")}>
           Movies
         </Type>
-        <Type value="tv" onMouseEnter={() => handleHover("enter")} onMouseLeave={() => handleHover("leave")}>
+        <Type value="tv" ref={ref2} onMouseEnter={() => handleHover(ref2, "enter")} onMouseLeave={() => handleHover(ref2, "leave")}>
           TV Shows
         </Type>
-        <Type value="people" onMouseEnter={() => handleHover("enter")} onMouseLeave={() => handleHover("leave")}>
+        <Type value="people" ref={ref3} onMouseEnter={() => handleHover(ref3, "enter")} onMouseLeave={() => handleHover(ref3, "leave")}>
           People
         </Type>
       </TypesContainer>
@@ -43,6 +51,7 @@ const Title = styled.h1``;
 
 const TypesContainer = styled.div`
   display: flex;
+  position: relative;
 `;
 
 const Type = styled.div`
@@ -52,9 +61,10 @@ const Type = styled.div`
 
 const TypesSlidingUnderline = styled.div`
   height: 2px;
-  width: 100px;
+  width: ${(props) => props.underlineWidth};
   background-color: orange;
   position: absolute;
-  top: 50%;
   bottom: 10%;
+  left: ${(props) => props.underlineX};
+  transition: all 0.3s;
 `;

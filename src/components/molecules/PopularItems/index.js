@@ -31,7 +31,7 @@ export default function PopularMovies() {
           return (
             <li key={index}>
               <Link to={`/title?id=${thisMovie.id}`}>
-                <Movie movie={thisMovie} posterUrl={poster_url} />
+                <Movie movie={thisMovie} first={index === 0} last={index + 1 === result.results.length} posterUrl={poster_url} />
               </Link>
             </li>
           );
