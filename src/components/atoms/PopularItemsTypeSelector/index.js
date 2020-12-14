@@ -1,39 +1,97 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "@xstyled/styled-components";
+import { connect } from "react-redux";
 
-export default function PopularItemsTypeSelector() {
-  const titleRef = React.createRef();
-  const containerRef = React.createRef();
-  const ref1 = React.createRef(); //Movies
-  const ref2 = React.createRef(); //TV Shows
-  const ref3 = React.createRef(); //People
+function PopularItemsTypeSelector(props) {
+  const containerRef = useRef(null);
+  const ref1 = useRef(null); //Movies
+  const ref2 = useRef(null); //TV Shows
+  const ref3 = useRef(null); //People
+  const [isHoveringInContainer, setIsHoveringInContainer] = useState(false);
   const [underlineX, setUnderlineX] = useState(0);
   const [underlineWidth, setUnderlineWidth] = useState(0);
-  const [xStart, setXStart] = useState(0);
 
+  //Set initial underline position
   useEffect(() => {
-    setXStart(titleRef.current.getBoundingClientRect().right);
-    setUnderlineWidth(Math.ceil(ref1.current.getBoundingClientRect().width));
+    switch (props.homepage_category) {
+      default:
+      case "movies":
+        handleHover(ref1);
+        break;
+      case "tv":
+        handleHover(ref2);
+        break;
+      case "people":
+        handleHover(ref3);
+        break;
+    }
   }, []);
 
-  function handleHover(e, direction) {
-    let eLeft = e.current.getBoundingClientRect().left;
-    setUnderlineX(eLeft - xStart);
-    setUnderlineWidth(Math.ceil(e.current.getBoundingClientRect().width));
+  //Update position of underline on hover
+  function handleHover(e) {
+    const containerX = containerRef.current.getBoundingClientRect().left;
+    const elementX = e.current.getBoundingClientRect().left;
+    setUnderlineX(calculateUnderlinePosition(containerX, elementX));
+    setUnderlineWidth(Math.ceil(e.current.offsetWidth));
+  }
+
+  function calculateUnderlinePosition(containerX, elementX) {
+    var result = Math.ceil(elementX - containerX);
+    //console.log("elementX " + elementX + " containerX " + containerX + " result " + result);
+    return result;
+  }
+
+  //Slide back to active category
+  function handleContainerExit() {
+    setIsHoveringInContainer(false);
+    switch (props.homepage_category) {
+      default:
+      case "movies":
+        handleHover(ref1);
+        break;
+      case "tv":
+        handleHover(ref2);
+        break;
+      case "people":
+        handleHover(ref3);
+        break;
+    }
+  }
+
+  function handleContainerEnter() {
+    setIsHoveringInContainer(true);
   }
 
   return (
-    <PopularItemsTypeSelectorContainer ref={containerRef}>
-      <Title ref={titleRef}>Popular </Title>
+    <PopularItemsTypeSelectorContainer ref={containerRef} onMouseEnter={() => handleContainerEnter()} onMouseLeave={() => handleContainerExit()}>
+      <TypesSlidingUnderline underlineX={underlineX + "px"} underlineWidth={underlineWidth + "px"} isHovering={isHoveringInContainer}></TypesSlidingUnderline>
+      <Title>Popular</Title>
       <TypesContainer>
-        <TypesSlidingUnderline underlineX={underlineX + "px"} underlineWidth={underlineWidth + "px"}></TypesSlidingUnderline>
-        <Type value="movies" ref={ref1} onMouseEnter={() => handleHover(ref1, "enter")} onMouseLeave={() => handleHover(ref1, "leave")}>
+        <Type
+          value="movies"
+          ref={ref1}
+          onMouseEnter={() => handleHover(ref1, "enter")}
+          onClick={() => props.updateHomepageCategory("movies")}
+          selected={props.homepage_category == "movies"}
+        >
           Movies
         </Type>
-        <Type value="tv" ref={ref2} onMouseEnter={() => handleHover(ref2, "enter")} onMouseLeave={() => handleHover(ref2, "leave")}>
+        <Type
+          value="tv"
+          ref={ref2}
+          onMouseEnter={() => handleHover(ref2, "enter")}
+          onClick={() => props.updateHomepageCategory("tv")}
+          selected={props.homepage_category == "tv"}
+        >
           TV Shows
         </Type>
-        <Type value="people" ref={ref3} onMouseEnter={() => handleHover(ref3, "enter")} onMouseLeave={() => handleHover(ref3, "leave")}>
+        <Type
+          value="people"
+          ref={ref3}
+          onMouseEnter={() => handleHover(ref3, "enter")}
+          onClick={() => props.updateHomepageCategory("people")}
+          selected={props.homepage_category == "people"}
+        >
           People
         </Type>
       </TypesContainer>
@@ -42,8 +100,7 @@ export default function PopularItemsTypeSelector() {
 }
 
 const PopularItemsTypeSelectorContainer = styled.div`
-  border: 2px solid;
-  display: flex;
+  display: inline-flex;
   position: relative;
 `;
 
@@ -56,15 +113,39 @@ const TypesContainer = styled.div`
 
 const Type = styled.div`
   padding: 1;
-  color: ${(props) => (props.active ? "black" : "gray")};
+  color: ${(props) => (props.selected ? "black" : "gray")};
+  &:hover {
+    cursor: pointer;
+    color: black;
+  }
 `;
 
 const TypesSlidingUnderline = styled.div`
-  height: 2px;
+  height: ${(props) => (props.isHovering ? "3px" : "2px")};
   width: ${(props) => props.underlineWidth};
-  background-color: orange;
+  background-color: black;
   position: absolute;
   bottom: 10%;
   left: ${(props) => props.underlineX};
   transition: all 0.3s;
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    ...state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateHomepageCategory: (category) => {
+      localStorage.setItem("homepage_category", category);
+      dispatch({
+        type: "SELECTED_HOMEPAGE_CATEGORY",
+        homepage_category: category,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PopularItemsTypeSelector);

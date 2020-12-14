@@ -1,6 +1,11 @@
+//initialise local storage
+if (!localStorage.getItem("homepage_category")) {
+  localStorage.setItem("homepage_category", "movies");
+}
+
 const initialState = {
   search_results: [],
-  posts: ["dummy data as an example"],
+  homepage_category: localStorage.getItem("homepage_category"),
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -22,6 +27,11 @@ const rootReducer = (state = initialState, action) => {
     return {
       ...state,
       search_results: stateClone.search_results,
+    };
+  } else if (action.type === "SELECTED_HOMEPAGE_CATEGORY") {
+    return {
+      ...state,
+      homepage_category: action.homepage_category,
     };
   }
 

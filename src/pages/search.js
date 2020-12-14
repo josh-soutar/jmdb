@@ -86,8 +86,6 @@ function SearchPage(props) {
         .then(() => {
           if (results.length == queries.length) {
             //If we've finished calling each API endpoint
-            //setResultsCategories(results); //set state. This will cause child components to update
-            //setResultsList(results[0]);
             props.updateSearchResutls(results);
           }
         });

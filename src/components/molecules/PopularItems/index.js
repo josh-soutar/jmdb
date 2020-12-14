@@ -44,7 +44,6 @@ export default function PopularMovies() {
     <>
       <MovieListContainer>
         <PopularItemsTypeSelector />
-
         <MovieList>{movies}</MovieList>
       </MovieListContainer>
     </>

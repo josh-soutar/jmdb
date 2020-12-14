@@ -5,6 +5,10 @@ const MovieContainer = styled.div`
   margin: 1;
   ${({ first }) => first && `margin: 10px 10px 10px 0;`}
   ${({ last }) => last && `margin: 10px 0 10px 10px;`}
+  background-color: white;
+  padding: 2 2 0 2;
+  text-align: center;
+  border-radius: 3px;
 `;
 
 const Poster = styled.div`
@@ -18,6 +22,8 @@ const Poster = styled.div`
 
 const Title = styled.div`
   font-size: 3;
+  padding: 1;
+  font-weight: 800;
 `;
 
 export default function Movie({ movie, posterUrl, first, last }) {

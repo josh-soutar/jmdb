@@ -9,6 +9,7 @@ const Container = styled.div`
   max-width: 300px;
   padding: 1;
   border: 1px solid lightgrey;
+  background-color: white;
 `;
 
 const InfoContainer = styled.div`
