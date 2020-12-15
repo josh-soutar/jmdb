@@ -8,7 +8,13 @@ const MovieContainer = styled.div`
   background-color: white;
   padding: 2 2 0 2;
   text-align: center;
+  border: 1px solid transparent;
   border-radius: 3px;
+  transition: all 0.3s;
+  &:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+    border: 1px solid #d3d9dd;
+  }
 `;
 
 const Poster = styled.div`
