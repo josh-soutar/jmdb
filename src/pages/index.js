@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 import Layout from "../layout";
-import PopularItems from "../components/molecules/PopularItems";
+import PopularItems from "../components/organisms/PopularItems";
 import HomepageSearch from "../components/molecules/HomepageSearch";
 
 const MovieListOuterContainer = styled.div`

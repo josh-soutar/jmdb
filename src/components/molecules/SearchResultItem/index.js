@@ -64,7 +64,11 @@ export default function SearchResultItem({ isFirst, type, data }) {
     console.log(`in ${type} onClick`, data);
 
     if (type == "Movies" || (type === "All" && data.media_type === "movie")) {
-      navigate(`/title?id=${data.id}`);
+      navigate(`/title?type=movies&id=${data.id}`);
+    } else if (type == "TV Shows") {
+      navigate(`/title?type=tv&id=${data.id}`);
+    } else if (type == "People") {
+      navigate(`/person?id=${data.id}`);
     }
   };
 

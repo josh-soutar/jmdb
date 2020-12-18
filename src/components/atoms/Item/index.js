@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { Box } from "@xstyled/styled-components";
 
-const MovieContainer = styled.div`
+const ItemContainer = styled.div`
   margin: 1;
   ${({ first }) => first && `margin: 10px 10px 10px 0;`}
   ${({ last }) => last && `margin: 10px 0 10px 10px;`}
@@ -32,13 +32,34 @@ const Title = styled.div`
   font-weight: 800;
 `;
 
-export default function Movie({ movie, posterUrl, first, last }) {
-  const bgImageUrl = `url(${posterUrl}${movie.poster_path})`;
+export default function Item({ type, item, posterUrl, first, last }) {
+  //Standardise object keys
+  const keyMap = {
+    title: "",
+    poster_path: "",
+  };
+
+  switch (type) {
+    case "movies":
+      keyMap.title = "title";
+      keyMap.poster_path = "poster_path";
+      break;
+    case "tv":
+      keyMap.title = "name";
+      keyMap.poster_path = "poster_path";
+      break;
+    case "people":
+      keyMap.title = "name";
+      keyMap.poster_path = "profile_path";
+      break;
+  }
+
+  const bgImageUrl = `url(${posterUrl}${item[keyMap.poster_path]})`;
 
   return (
-    <MovieContainer first={first} last={last}>
+    <ItemContainer first={first} last={last}>
       <Poster bgImageUrl={bgImageUrl} />
-      <Title>{movie.title}</Title>
-    </MovieContainer>
+      <Title>{item[keyMap.title]}</Title>
+    </ItemContainer>
   );
 }
