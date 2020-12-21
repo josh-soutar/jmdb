@@ -116,6 +116,26 @@ export default function ViewTitle() {
   }
 }
 
+const HeaderContainer = styled.div`
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: ${(props) => props.bgImage};
+  color: ${(props) => (props.isDark ? "white" : "black")};
+`;
+const HeaderInnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 3;
+  width: 100%;
+  background-image: ${(props) => props.bgGradient};
+`;
+
 const HeadingContent = styled.div`
   max-width: 1300px;
   width: 100vw;
@@ -135,25 +155,6 @@ const BodyContent = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-start;
-`;
-const HeaderContainer = styled.div`
-  width: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  display: flex;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: ${(props) => props.bgImage};
-  color: ${(props) => (props.isDark ? "white" : "black")};
-`;
-const HeaderInnerContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 3 4;
-  width: 100%;
-  background-image: ${(props) => props.bgGradient};
 `;
 
 const SummaryInfo = styled.div`
