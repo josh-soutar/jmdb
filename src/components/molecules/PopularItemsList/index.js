@@ -25,7 +25,6 @@ export default function PopularItemsList({ item_category }) {
     fetch(apiQuery)
       .then((res) => res.json())
       .then((result) => {
-        console.log("popular results", result.results[0]);
         let tempItemData = result.results.map((thisItem, index) => {
           let url;
           if (item_category == "movies" || item_category == "tv") {

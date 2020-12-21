@@ -65,9 +65,9 @@ export default function SearchResultItem({ isFirst, type, data }) {
 
     if (type == "Movies" || (type === "All" && data.media_type === "movie")) {
       navigate(`/title?type=movies&id=${data.id}`);
-    } else if (type == "TV Shows") {
+    } else if (type == "TV Shows" || (type === "All" && data.media_type === "tv")) {
       navigate(`/title?type=tv&id=${data.id}`);
-    } else if (type == "People") {
+    } else if (type == "People" || (type === "All" && data.media_type === "person")) {
       navigate(`/person?id=${data.id}`);
     }
   };

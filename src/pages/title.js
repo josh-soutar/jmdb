@@ -121,9 +121,18 @@ const HeadingContent = styled.div`
   width: 100vw;
   display: flex;
 `;
+
+const BodyContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  display: flex;
+`;
+
 const BodyContent = styled.div`
   max-width: 1300px;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: flex-start;
 `;
@@ -146,13 +155,7 @@ const HeaderInnerContainer = styled.div`
   width: 100%;
   background-image: ${(props) => props.bgGradient};
 `;
-const BodyContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-  display: flex;
-`;
+
 const SummaryInfo = styled.div`
   display: flex;
   flex-direction: column;

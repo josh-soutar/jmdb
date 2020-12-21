@@ -12,6 +12,7 @@ const Container = styled.div`
 
 const CastContainer = styled.div`
   display: flex;
+  align-items: flex-start;
   overflow-x: auto;
   margin-right: 1;
 `;
@@ -24,9 +25,7 @@ export default function Cast({ title_id }) {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${title_id}/credits?api_key=674d2d5130dd9ac19dc844ac2be0895a`
-    )
+    fetch(`https://api.themoviedb.org/3/movie/${title_id}/credits?api_key=674d2d5130dd9ac19dc844ac2be0895a`)
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -38,9 +37,10 @@ export default function Cast({ title_id }) {
     <Container>
       <Heading>Cast</Heading>
       <CastContainer>
-        {cast.map((actor, index) => {
-          return <Actor key={index} first={index == 0} actor={actor} />;
-        })}
+        {cast &&
+          cast.map((actor, index) => {
+            return <Actor key={index} first={index == 0} actor={actor} />;
+          })}
       </CastContainer>
     </Container>
   );

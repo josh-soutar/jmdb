@@ -4,6 +4,7 @@ import { DateTime, Duration } from "luxon";
 
 const FactsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const FactsSeparator = styled.div`
@@ -37,13 +38,12 @@ export default function TitleFacts({ genres, releaseDate, runTime }) {
   const runtime = Duration.fromObject({
     minutes: runTime,
   }).toFormat("h'h' m'm'");
-  const release_date = DateTime.fromISO(releaseDate).toLocaleString(
-    DateTime.DATE_FULL
-  );
+  const release_date = DateTime.fromISO(releaseDate).toLocaleString(DateTime.DATE_FULL);
 
   return (
     <FactsContainer>
-      <ReleaseDate>{release_date}</ReleaseDate>
+      {release_date != "" && <ReleaseDate>{release_date}</ReleaseDate>}
+
       <FactsSeparator />
       <Genres>
         {genres.map((genre, index) => {
@@ -55,7 +55,7 @@ export default function TitleFacts({ genres, releaseDate, runTime }) {
         })}
       </Genres>
       <FactsSeparator />
-      <RunTime>{runtime}</RunTime>
+      {runtime != undefined && <RunTime>{runtime}</RunTime>}
     </FactsContainer>
   );
 }

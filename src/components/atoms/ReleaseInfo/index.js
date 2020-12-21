@@ -6,6 +6,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-width: 300px;
   max-width: 300px;
   padding: 1;
   border: 1px solid lightgrey;
@@ -33,21 +34,21 @@ export default function ReleaseInfo({ titleData }) {
         <Text>{titleData.status}</Text>
       </InfoContainer>
 
-      {titleData.budget != 0 && (
+      {titleData.hasOwnProperty("budget") && titleData.budget != "" && (
         <InfoContainer>
           <Heading>Budget</Heading>
           <NumberFormat value={titleData.budget} displayType={"text"} thousandSeparator={true} prefix={"$"} />
         </InfoContainer>
       )}
 
-      {titleData.revenue != 0 && (
+      {titleData.hasOwnProperty("revenue") && titleData.revenue != "" && (
         <InfoContainer>
           <Heading>Box office</Heading>
           <NumberFormat value={titleData.revenue} displayType={"text"} thousandSeparator={true} prefix={"$"} />
         </InfoContainer>
       )}
 
-      {titleData.production_countries && (
+      {titleData.hasOwnProperty("production_countries") && titleData.production_countries && (
         <InfoContainer>
           <Heading>Production countries</Heading>
           {titleData.production_countries.map((country, index) => (
@@ -56,7 +57,7 @@ export default function ReleaseInfo({ titleData }) {
         </InfoContainer>
       )}
 
-      {titleData.production_companies && (
+      {titleData.hasOwnProperty("production_companies") && titleData.production_companies && (
         <InfoContainer>
           <Heading>Production companies</Heading>
           {titleData.production_companies.map((company, index) => (

@@ -6,8 +6,8 @@ const ActorContainer = styled.div`
   margin: 1;
   margin-left: ${(props) => (props.first ? "0" : "1")};
   background-color: white;
-  min-width: 138px;
-  width: 100%;
+  min-width: 140px;
+  width: 140px;
 `;
 
 const TextContainer = styled.div`
