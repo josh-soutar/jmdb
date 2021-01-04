@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[9],{FSz4:function(n,t,e){"use strict";e.r(t),e.d(t,"default",(function(){return a}));var r=e("q1tI"),u=e.n(r);function a(){return u.a.createElement(u.a.Fragment,null,"this is the 404")}}}]);
+//# sourceMappingURL=component---src-pages-placeholder-js-dc2b809c8f96eeffbe2e.js.map

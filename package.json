@@ -1,7 +1,8 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "homepage": "https://josh-soutar.github.io/jmdb",
+  "name": "jmdb",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "The #2 source for Movie, TV and celebrity content",
   "version": "0.1.0",
   "license": "0BSD",
   "scripts": {
@@ -11,7 +12,9 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
