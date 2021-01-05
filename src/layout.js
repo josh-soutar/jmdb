@@ -2,7 +2,7 @@ import React from "react";
 import styled, { ThemeProvider } from "@xstyled/styled-components";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTicketAlt, faHeart, faBookmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faTicketAlt, faHeart, faBookmark, faSpinner, faCaretSquareRight } from "@fortawesome/free-solid-svg-icons";
 import { faListAlt } from "@fortawesome/free-regular-svg-icons";
 import { Helmet } from "react-helmet";
 
@@ -44,7 +44,7 @@ export default function Layout({ children }) {
     localStorage.setItem("background_url", "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces");
   }
 
-  library.add(faTicketAlt, faListAlt, faHeart, faBookmark, faSpinner);
+  library.add(faTicketAlt, faListAlt, faHeart, faBookmark, faSpinner, faCaretSquareRight);
 
   return (
     <ThemeProvider theme={theme}>

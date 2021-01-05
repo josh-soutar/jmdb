@@ -63,9 +63,12 @@ function PopularItemsTypeSelector(props) {
   }
 
   return (
+    <>
+    <TitleContainer>
+      <Title>Explore what's popular</Title>
+    </TitleContainer>
     <PopularItemsTypeSelectorContainer ref={containerRef} onMouseEnter={() => handleContainerEnter()} onMouseLeave={() => handleContainerExit()}>
-      <TypesSlidingUnderline underlineX={underlineX + "px"} underlineWidth={underlineWidth + "px"} isHovering={isHoveringInContainer}></TypesSlidingUnderline>
-      <Title>Popular</Title>
+      <TypesSlidingUnderline underlineX={underlineX + "px"} underlineWidth={underlineWidth + "px"} isHovering={isHoveringInContainer}></TypesSlidingUnderline>      
       <TypesContainer>
         <Type
           value="movies"
@@ -96,6 +99,7 @@ function PopularItemsTypeSelector(props) {
         </Type>
       </TypesContainer>
     </PopularItemsTypeSelectorContainer>
+    </>
   );
 }
 
@@ -104,7 +108,12 @@ const PopularItemsTypeSelectorContainer = styled.div`
   position: relative;
 `;
 
-const Title = styled.h1``;
+const TitleContainer = styled.div`
+`
+
+const Title = styled.h1`
+font-weight: 500;
+`;
 
 const TypesContainer = styled.div`
   display: flex;
@@ -113,6 +122,7 @@ const TypesContainer = styled.div`
 
 const Type = styled.div`
   padding: 1;
+  font-size: 5;
   color: ${(props) => (props.selected ? "black" : "gray")};
   &:hover {
     cursor: pointer;

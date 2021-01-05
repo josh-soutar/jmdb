@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 import Item from "../../atoms/Item";
 import { Link } from "gatsby";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function PopularItemsList({ item_category }) {
   const [items, setItems] = useState([]);
   const poster_url = localStorage.getItem("poster_url");
   let apiQuery;
-  let link;
+  
 
   useEffect(() => {
     switch (item_category) {
@@ -44,10 +45,57 @@ export default function PopularItemsList({ item_category }) {
       });
   }, [item_category]);
 
-  return <Container>{items}</Container>;
+  return (
+  <ListContainer>
+    {items}
+    <ButtonContainer>
+      <ListButton position="left">
+        <StyledIconReversed icon="caret-square-right" />
+      </ListButton>
+      <ListButton position="right">
+        <FontAwesomeIcon icon="caret-square-right" />
+      </ListButton>
+    </ButtonContainer>    
+  </ListContainer>
+  );
 }
 
-const Container = styled.div`
-  display: flex;
-  list-style: none;
+
+const ButtonContainer = styled.div`
+position: absolute;
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
+
+const ListButton = styled.div`
+width: 100px;
+height: 100px;
+background-color: rgba(255,255,255,0.5);
+border: 2px solid black;
+color: black;
+font-size: 100px;
+display: grid;
+place-content: center;
+
+${({ position }) =>
+position === "left" && `//margin-left: -50px;`}
+
+${({ position }) =>
+position === "right" && `//margin-right: -50px;`}
+`
+
+const StyledIconReversed = styled(FontAwesomeIcon)`
+transform: rotate(180deg);
 `;
+
+const ListContainer = styled.div`
+position: relative;
+display: flex;
+  list-style: none;
+  overflow-x: hidden;
+`
+
+
