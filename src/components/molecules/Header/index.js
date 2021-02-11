@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styled, { Box } from "@xstyled/styled-components";
+import React from "react";
+import styled from "@xstyled/styled-components";
 import { Link } from "gatsby";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

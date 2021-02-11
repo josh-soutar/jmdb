@@ -29,7 +29,7 @@ const Poster = styled.div`
 const Title = styled.div`
   font-size: 3;
   padding: 1;
-  font-weight: 800;
+  font-weight: 500;
 `;
 
 export default function Item({ type, item, posterUrl, first, last }) {

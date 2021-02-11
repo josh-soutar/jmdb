@@ -1,5 +1,5 @@
 var plugins = [{
-      plugin: require('/Users/josh.soutar/Documents/React/jmdb/node_modules/gatsby-plugin-react-helmet/gatsby-ssr'),
+      plugin: require('E:/React repos/jmdb/node_modules/gatsby-plugin-react-helmet/gatsby-ssr'),
       options: {"plugins":[]},
     }]
 // During bootstrap, we write requires at top of this file which looks like:
