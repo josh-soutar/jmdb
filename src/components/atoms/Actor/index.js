@@ -7,6 +7,9 @@ const ActorContainer = styled.div`
   margin: 1;
   margin-left: ${(props) => (props.first ? "0" : "10px")};
   background-color: white;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const TextContainer = styled.div`

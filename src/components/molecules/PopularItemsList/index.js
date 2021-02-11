@@ -8,7 +8,6 @@ export default function PopularItemsList({ item_category }) {
   const [items, setItems] = useState([]);
   const poster_url = localStorage.getItem("poster_url"); //TO DO: Update to use redux?
   let apiQuery;
-  
 
   useEffect(() => {
     switch (item_category) {
@@ -46,8 +45,9 @@ export default function PopularItemsList({ item_category }) {
   }, [item_category]);
 
   return (
-  <ListContainer>
-    {items}
+    <ListContainer>
+      {items}
+      {/*
     <ButtonContainer>
       <ListButton position="left">
         <StyledIconReversed icon="caret-square-right" />
@@ -56,46 +56,42 @@ export default function PopularItemsList({ item_category }) {
         <FontAwesomeIcon icon="caret-square-right" />
       </ListButton>
     </ButtonContainer>    
-  </ListContainer>
+    */}
+    </ListContainer>
   );
 }
 
-
 const ButtonContainer = styled.div`
-position: absolute;
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const ListButton = styled.div`
-width: 100px;
-height: 100px;
-background-color: rgba(255,255,255,0.5);
-border: 2px solid black;
-color: black;
-font-size: 100px;
-display: grid;
-place-content: center;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid black;
+  color: black;
+  font-size: 100px;
+  display: grid;
+  place-content: center;
 
-${({ position }) =>
-position === "left" && `//margin-left: -50px;`}
+  ${({ position }) => position === "left" && `//margin-left: -50px;`}
 
-${({ position }) =>
-position === "right" && `//margin-right: -50px;`}
-`
+  ${({ position }) => position === "right" && `//margin-right: -50px;`}
+`;
 
 const StyledIconReversed = styled(FontAwesomeIcon)`
-transform: rotate(180deg);
+  transform: rotate(180deg);
 `;
 
 const ListContainer = styled.div`
-position: relative;
-display: flex;
+  position: relative;
+  display: flex;
   list-style: none;
   overflow-x: hidden;
-`
-
-
+`;
