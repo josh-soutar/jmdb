@@ -1,13 +1,12 @@
 import React from "react";
-import styled, { Box } from "@xstyled/styled-components";
+import styled from "@xstyled/styled-components";
+import { Link } from "gatsby";
 
 const ActorContainer = styled.div`
   border-radius: 2px;
   margin: 1;
-  margin-left: ${(props) => (props.first ? "0" : "1")};
+  margin-left: ${(props) => (props.first ? "0" : "10px")};
   background-color: white;
-  min-width: 140px;
-  width: 140px;
 `;
 
 const TextContainer = styled.div`
@@ -20,9 +19,12 @@ const ActorName = styled.div`
   font-weight: bold;
 `;
 
-const Headshot = styled.img`
-  width: 100%;
+const Headshot = styled.div`
+  background-image: ${(props) => props.bgImageUrl};
+  width: 140px;
   height: 175px;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 export default function Actor({ actor, first }) {
@@ -36,11 +38,13 @@ export default function Actor({ actor, first }) {
 
   return (
     <ActorContainer first={first}>
-      <Headshot src={headshotURL}></Headshot>
-      <TextContainer>
-        <ActorName>{actor.name}</ActorName>
-        <CharacterName>{actor.character}</CharacterName>
-      </TextContainer>
+      <Link to={`/person?id=${actor.id}`}>
+        <Headshot bgImageUrl={"url(" + headshotURL + ")"}></Headshot>
+        <TextContainer>
+          <ActorName>{actor.name}</ActorName>
+          <CharacterName>{actor.character}</CharacterName>
+        </TextContainer>
+      </Link>
     </ActorContainer>
   );
 }

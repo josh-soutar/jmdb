@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { Box } from "@xstyled/styled-components";
+import styled from "@xstyled/styled-components";
 
 const ItemContainer = styled.div`
   margin: 1;

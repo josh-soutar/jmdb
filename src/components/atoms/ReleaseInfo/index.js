@@ -9,6 +9,7 @@ const Container = styled.div`
   min-width: 300px;
   max-width: 300px;
   padding: 1;
+  margin-top: 35px;
   border: 1px solid lightgrey;
   background-color: white;
 `;

@@ -14,7 +14,6 @@ const PageWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-flow: column;
-  width: 100%;
 `;
 
 const HeaderContainer = styled.header`

@@ -5,7 +5,7 @@ import { Link } from "gatsby";
 
 export default function PopularItemsList({ item_category }) {
   const [items, setItems] = useState([]);
-  const poster_url = localStorage.getItem("poster_url");
+  const poster_url = localStorage.getItem("poster_url"); //TO DO: Update to use redux?
   let apiQuery;
   let link;
 

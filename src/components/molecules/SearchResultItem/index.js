@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@xstyled/styled-components";
 import PersonCredits from "../../atoms/PersonCredits";
 import { navigate } from "@reach/router";
@@ -35,8 +35,6 @@ export default function SearchResultItem({ isFirst, type, data }) {
 
   const handleClick = () => {
     //redirect to title page based on if clicking movie, tv show or person
-    console.log(`in ${type} onClick`, data);
-
     if (type == "Movies" || (type === "All" && data.media_type === "movie")) {
       navigate(`/title?type=movies&id=${data.id}`);
     } else if (type == "TV Shows" || (type === "All" && data.media_type === "tv")) {
