@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "@xstyled/styled-components";
 import Layout from "../layout";
 
 export default function Person() {
   const URLparam = new URLSearchParams(document.location.search.substring(1));
   const id = URLparam.get("id");
+  const apiQuery = `https://api.themoviedb.org/3/person/${id}?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US`;
 
   const [personData, setPersonData] = useState();
   const [posterUrl, setPosterUrl] = useState();
-
-  const apiQuery = `https://api.themoviedb.org/3/person/${id}?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US`;
+  const [bio, setBio] = useState({
+    btn_label: "",
+    text: "",
+  });
+  const [bioCharacterLimit, setBioCharacterLimit] = useState(500);
+  const [fullBioOverCharacterLimit, setFullBioOverCharacterLimit] = useState(false);
 
   useEffect(() => {
     fetch(apiQuery)
@@ -18,8 +23,34 @@ export default function Person() {
         setPersonData(result);
         setPosterUrl("url(" + localStorage.getItem("poster_url") + result.profile_path + ")");
         console.log("person data is ", result);
+
+        let bioText = result.biography;
+        if (bioText.length > bioCharacterLimit) {
+          setFullBioOverCharacterLimit(true);
+          bioText = bioText.substring(0, bioCharacterLimit) + "...";
+        }
+        setBio({
+          btn_label: "Show more",
+          text: bioText,
+        });
       });
   }, [id]);
+
+  function handleBioClick() {
+    //If bio is already showing the full text, show less
+    if (bio.btn_label === "Show less") {
+      setBio({
+        btn_label: "Show more",
+        text: personData.biography.substring(0, bioCharacterLimit) + "...",
+      });
+    } else {
+      //If bio is currently showing the cut down text, show more
+      setBio({
+        btn_label: "Show less",
+        text: personData.biography, //Reset to full text
+      });
+    }
+  }
 
   return (
     <Layout>
@@ -44,7 +75,19 @@ export default function Person() {
 
               <Bio>
                 <AreaHeading>Biography</AreaHeading>
-                {personData.biography}
+                <>
+                  <BioText>{bio.text}</BioText>
+
+                  {fullBioOverCharacterLimit && (
+                    <BioShowMoreToggle
+                      onClick={() => {
+                        handleBioClick();
+                      }}
+                    >
+                      {bio.btn_label}
+                    </BioShowMoreToggle>
+                  )}
+                </>
               </Bio>
               <KnownFor>
                 <AreaHeading>Known For</AreaHeading>
@@ -104,6 +147,20 @@ const Name = styled.h2`
 `;
 const Bio = styled.div`
   grid-area: bio;
+`;
+
+const BioShowMoreToggle = styled.div`
+  display: inline-block;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
+const BioText = styled.div`
+  background-color: white;
+  border-radius: 3px;
+  padding: 1;
 `;
 const KnownFor = styled.div`
   grid-area: known_for;
