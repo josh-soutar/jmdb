@@ -13,7 +13,7 @@ export default function Person() {
     btn_label: "",
     text: "",
   });
-  const [bioCharacterLimit, setBioCharacterLimit] = useState(500);
+  const [bioCharacterLimit, setBioCharacterLimit] = useState(350);
   const [fullBioOverCharacterLimit, setFullBioOverCharacterLimit] = useState(false);
 
   useEffect(() => {
@@ -24,25 +24,35 @@ export default function Person() {
         setPosterUrl("url(" + localStorage.getItem("poster_url") + result.profile_path + ")");
         console.log("person data is ", result);
 
-        let bioText = result.biography;
-        if (bioText.length > bioCharacterLimit) {
-          setFullBioOverCharacterLimit(true);
-          bioText = bioText.substring(0, bioCharacterLimit) + "...";
-        }
-        setBio({
-          btn_label: "Show more",
-          text: bioText,
-        });
+        limitBioLength(result.biography);
       });
   }, [id]);
+
+  function limitBioLength(fullBioText) {
+    let bioText = fullBioText;
+
+    if (bioText.length > bioCharacterLimit) {
+      setFullBioOverCharacterLimit(true);
+
+      bioText = bioText.substring(0, bioCharacterLimit);
+      //Check if the last character is a space
+      if (bioText.substring(bioText.length - 1) === " ") {
+        //If so, remove the character so the "..." doesn't follow an empty space
+        bioText = bioText.slice(0, -1);
+      }
+      bioText += "...";
+    }
+
+    setBio({
+      btn_label: "Show more",
+      text: bioText,
+    });
+  }
 
   function handleBioClick() {
     //If bio is already showing the full text, show less
     if (bio.btn_label === "Show less") {
-      setBio({
-        btn_label: "Show more",
-        text: personData.biography.substring(0, bioCharacterLimit) + "...",
-      });
+      limitBioLength(personData.biography);
     } else {
       //If bio is currently showing the cut down text, show more
       setBio({
@@ -76,6 +86,7 @@ export default function Person() {
               <Bio>
                 <AreaHeading>Biography</AreaHeading>
                 <>
+                  {/* TO DO: Convert bio stuff into a component */}
                   <BioText>{bio.text}</BioText>
 
                   {fullBioOverCharacterLimit && (
@@ -89,6 +100,7 @@ export default function Person() {
                   )}
                 </>
               </Bio>
+
               <KnownFor>
                 <AreaHeading>Known For</AreaHeading>
               </KnownFor>
