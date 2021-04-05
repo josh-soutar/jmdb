@@ -25,7 +25,8 @@ const HeaderContainer = styled.header`
 `;
 
 const ContentWrapper = styled.div`
-  width: 100%;
+  width: 94%;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
