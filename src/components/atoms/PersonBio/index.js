@@ -51,10 +51,13 @@ export default function PersonBio({ bioData }) {
 
 
     return (
+        
         <>                  
+        <Heading>Biography</Heading>
           <BioText>
               {bio.text}
               {fullBioOverCharacterLimit && (
+                <div>
             <BioShowMoreToggle
               onClick={() => {
                 handleBioClick();
@@ -62,6 +65,7 @@ export default function PersonBio({ bioData }) {
             >
               {bio.btn_label}
             </BioShowMoreToggle>
+            </div>
           )}  
               </BioText>
                 
@@ -69,18 +73,22 @@ export default function PersonBio({ bioData }) {
     )
 }
 
+
+const Heading = styled.h3`
+font-weight: bold;
+`
+
 const BioShowMoreToggle = styled.div`
   display: inline-block;
-  padding-left: 5px;
+  padding-top: 1;
+  color: grey;  
   font-weight: bold;
-  &:hover {
-    text-decoration: underline;
+  &:hover {    
     cursor: pointer;
   }
 `;
 
-const BioText = styled.div`
-  background-color: white;
+const BioText = styled.div`  
   border-radius: 3px;
-  padding: 1;
+  padding: 1 0;
 `;
