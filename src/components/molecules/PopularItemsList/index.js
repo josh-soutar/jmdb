@@ -6,20 +6,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function PopularItemsList({ item_category }) {
   const [items, setItems] = useState([]);
-  const poster_url = localStorage.getItem("poster_url"); //TO DO: Update to use redux?
+  //const poster_url = localStorage.getItem("poster_url"); //TO DO: Update to use redux?
   let apiQuery;
 
   useEffect(() => {
     switch (item_category) {
       default:
       case "movies":
-        apiQuery = "https://api.themoviedb.org/3/discover/movie?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&sort_by=popularity.desc&page=1";
+        apiQuery =
+          "https://api.themoviedb.org/3/discover/movie?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&sort_by=popularity.desc&page=1";
         break;
       case "tv":
-        apiQuery = "https://api.themoviedb.org/3/discover/tv?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&sort_by=popularity.desc&page=1";
+        apiQuery =
+          "https://api.themoviedb.org/3/discover/tv?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&sort_by=popularity.desc&page=1";
         break;
       case "people":
-        apiQuery = "https://api.themoviedb.org/3/person/popular?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&page=1";
+        apiQuery =
+          "https://api.themoviedb.org/3/person/popular?api_key=674d2d5130dd9ac19dc844ac2be0895a&language=en-US&page=1";
         break;
     }
     fetch(apiQuery)
@@ -35,7 +38,13 @@ export default function PopularItemsList({ item_category }) {
           return (
             <li key={index}>
               <Link to={url}>
-                <Item type={item_category} item={thisItem} first={index === 0} last={index + 1 === result.results.length} posterUrl={poster_url} />
+                {/*<Item type={item_category} item={thisItem} first={index === 0} last={index + 1 === result.results.length} posterUrl={poster_url} /> */}
+                <Item
+                  type={item_category}
+                  item={thisItem}
+                  first={index === 0}
+                  last={index + 1 === result.results.length}
+                />
               </Link>
             </li>
           );

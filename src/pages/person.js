@@ -17,7 +17,7 @@ export default function Person() {
     fetch(apiQuery)
       .then((res) => res.json())
       .then((result) => {
-        console.log("Person data", result);
+        //console.log("Person data", result);
         setPersonData(result);
         setPosterUrl(
           "url(" +
@@ -60,7 +60,10 @@ export default function Person() {
                 <h2>{personData.name}</h2>
               </Name>
               {bioData && <PersonBio bioData={bioData} />}
-              <PersonKnownForAndCredits personId={personData.id} />
+              <PersonKnownForAndCredits
+                personId={personData.id}
+                knownFor={personData.known_for_department}
+              />
             </RightContainer>
           </>
         )}

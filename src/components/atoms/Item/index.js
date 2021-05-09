@@ -32,7 +32,9 @@ const Title = styled.div`
   font-weight: 500;
 `;
 
-export default function Item({ type, item, posterUrl, first, last }) {
+export default function Item({ type, item, first, last }) {
+  const poster_url = localStorage.getItem("poster_url");
+
   //Standardise object keys
   const keyMap = {
     title: "",
@@ -41,6 +43,7 @@ export default function Item({ type, item, posterUrl, first, last }) {
 
   switch (type) {
     case "movies":
+    case "movie":
       keyMap.title = "title";
       keyMap.poster_path = "poster_path";
       break;
@@ -54,7 +57,7 @@ export default function Item({ type, item, posterUrl, first, last }) {
       break;
   }
 
-  const bgImageUrl = `url(${posterUrl}${item[keyMap.poster_path]})`;
+  const bgImageUrl = `url(${poster_url}${item[keyMap.poster_path]})`;
 
   return (
     <ItemContainer first={first} last={last}>
