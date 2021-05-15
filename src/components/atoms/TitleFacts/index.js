@@ -34,11 +34,13 @@ const Genre = styled.div`
 `}
 `;
 
-export default function TitleFacts({ genres, releaseDate, runTime }) {
+export default function TitleFacts({ type, genres, releaseDate, runTime }) {
   const runtime = Duration.fromObject({
     minutes: runTime,
   }).toFormat("h'h' m'm'");
-  const release_date = DateTime.fromISO(releaseDate).toLocaleString(DateTime.DATE_FULL);
+  const release_date = DateTime.fromISO(releaseDate).toLocaleString(
+    DateTime.DATE_FULL
+  );
 
   return (
     <FactsContainer>
@@ -54,8 +56,13 @@ export default function TitleFacts({ genres, releaseDate, runTime }) {
           );
         })}
       </Genres>
-      <FactsSeparator />
-      {runtime != undefined && <RunTime>{runtime}</RunTime>}
+
+      {type != "tv" && runtime != undefined && (
+        <>
+          <FactsSeparator />
+          <RunTime>{runtime}</RunTime>
+        </>
+      )}
     </FactsContainer>
   );
 }

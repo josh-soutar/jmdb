@@ -51,12 +51,19 @@ export default function ViewTitle() {
         const titleBackdrop = `https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${result.backdrop_path}`;
         img.crossOrigin = "Anonymous"; //Cross origin needs to come before src!!
         img.src = titleBackdrop;
+        if (type === "tv") {
+          //Standardise key names
+          result.title = result.name;
+          result.release_date = result.first_air_date;
+        }
         setTitleData(result);
         setHeaderBgImage(`url('${titleBackdrop}')`);
       });
   }, [id]);
 
-  const poster_url = `url(${localStorage.getItem("poster_url")}${titleData.poster_path})`;
+  const poster_url = `url(${localStorage.getItem("poster_url")}${
+    titleData.poster_path
+  })`;
 
   return (
     <Layout>
@@ -73,12 +80,26 @@ export default function ViewTitle() {
                 <SummaryInfo>
                   <Title>{titleData.title}</Title>
 
-                  <TitleFacts genres={titleData.genres} releaseDate={titleData.release_date} runTime={titleData.runtime} />
+                  <TitleFacts
+                    type={type}
+                    genres={titleData.genres}
+                    releaseDate={titleData.release_date}
+                    runTime={titleData.runtime}
+                  />
 
                   <ScoreAndActions>
                     <UserScoreContainer>
-                      <Spring config={{ delay: 300 }} from={{ value: 0 }} to={{ value: titleData.vote_average }}>
-                        {(props) => <RatingDial staticScore={titleData.vote_average} animatedScore={props.value}></RatingDial>}
+                      <Spring
+                        config={{ delay: 300 }}
+                        from={{ value: 0 }}
+                        to={{ value: titleData.vote_average }}
+                      >
+                        {(props) => (
+                          <RatingDial
+                            staticScore={titleData.vote_average}
+                            animatedScore={props.value}
+                          ></RatingDial>
+                        )}
                       </Spring>
                     </UserScoreContainer>
 
@@ -99,10 +120,12 @@ export default function ViewTitle() {
             </HeaderInnerContainer>
           </HeaderContainer>
 
-          <BodyContainer>
-            <BodyContent>
-              <Cast title_id={titleData.id} />
-              <ReleaseInfo titleData={titleData} />
+          <BodyContainer className="bodyContainer">
+            <BodyContent className="bodyContent">
+              <CastWrapper className="castWrapper">
+                <Cast type={type} title_id={titleData.id} />
+              </CastWrapper>
+              <ReleaseInfo type={type} titleData={titleData} />
             </BodyContent>
           </BodyContainer>
         </>
@@ -117,13 +140,14 @@ export default function ViewTitle() {
 }
 
 const HeaderContainer = styled.div`
-  width: 100%;
+  width: 100vw;
   position: relative;
   display: flex;
   justify-content: center;
   display: flex;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   background-image: ${(props) => props.bgImage};
   color: ${(props) => (props.isDark ? "white" : "black")};
 `;
@@ -143,7 +167,6 @@ const HeadingContent = styled.div`
 `;
 
 const BodyContainer = styled.div`
-  width: 100%;
   display: flex;
   justify-content: center;
   padding: 30px;
@@ -154,7 +177,11 @@ const BodyContent = styled.div`
   max-width: 1300px;
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
+`;
+
+const CastWrapper = styled.div`
+  width: calc(100% - 300px);
 `;
 
 const SummaryInfo = styled.div`

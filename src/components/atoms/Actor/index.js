@@ -3,20 +3,30 @@ import styled from "@xstyled/styled-components";
 import { Link } from "gatsby";
 
 const ActorContainer = styled.div`
-  border-radius: 2px;
+  border-radius: 5px;
   margin: 1;
   margin-left: ${(props) => (props.first ? "0" : "10px")};
   background-color: white;
+  min-width: 140px;
+  width: 140px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const StyledLink = styled(Link)`
+  width: 100%;
+  border-radius: inherit;
 `;
 
 const TextContainer = styled.div`
   padding: 1;
 `;
 
-const CharacterName = styled.div``;
+const CharacterName = styled.div`
+  font-size: 2;
+`;
 
 const ActorName = styled.div`
   font-weight: bold;
@@ -24,10 +34,12 @@ const ActorName = styled.div`
 
 const Headshot = styled.div`
   background-image: ${(props) => props.bgImageUrl};
-  width: 140px;
   height: 175px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 export default function Actor({ actor, first }) {
@@ -41,13 +53,13 @@ export default function Actor({ actor, first }) {
 
   return (
     <ActorContainer first={first}>
-      <Link to={`/person?id=${actor.id}`}>
+      <StyledLink to={`/person?id=${actor.id}`}>
         <Headshot bgImageUrl={"url(" + headshotURL + ")"}></Headshot>
         <TextContainer>
           <ActorName>{actor.name}</ActorName>
           <CharacterName>{actor.character}</CharacterName>
         </TextContainer>
-      </Link>
+      </StyledLink>
     </ActorContainer>
   );
 }

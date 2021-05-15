@@ -64,41 +64,50 @@ function PopularItemsTypeSelector(props) {
 
   return (
     <>
-    <TitleContainer>
-      <Title>Explore what's popular</Title>
-    </TitleContainer>
-    <PopularItemsTypeSelectorContainer ref={containerRef} onMouseEnter={() => handleContainerEnter()} onMouseLeave={() => handleContainerExit()}>
-      <TypesSlidingUnderline underlineX={underlineX + "px"} underlineWidth={underlineWidth + "px"} isHovering={isHoveringInContainer}></TypesSlidingUnderline>      
-      <TypesContainer>
-        <Type
-          value="movies"
-          ref={ref1}
-          onMouseEnter={() => handleHover(ref1, "enter")}
-          onClick={() => props.updateHomepageCategory("movies")}
-          selected={props.homepage_category == "movies"}
-        >
-          Movies
-        </Type>
-        <Type
-          value="tv"
-          ref={ref2}
-          onMouseEnter={() => handleHover(ref2, "enter")}
-          onClick={() => props.updateHomepageCategory("tv")}
-          selected={props.homepage_category == "tv"}
-        >
-          TV Shows
-        </Type>
-        <Type
-          value="people"
-          ref={ref3}
-          onMouseEnter={() => handleHover(ref3, "enter")}
-          onClick={() => props.updateHomepageCategory("people")}
-          selected={props.homepage_category == "people"}
-        >
-          People
-        </Type>
-      </TypesContainer>
-    </PopularItemsTypeSelectorContainer>
+      <TitleContainer>
+        <Title>Explore what's popular</Title>
+      </TitleContainer>
+      <PopularItemsTypeSelectorContainer
+        ref={containerRef}
+        onMouseEnter={() => handleContainerEnter()}
+        onMouseLeave={() => handleContainerExit()}
+      >
+        <TypesSlidingUnderline
+          underlineX={underlineX + "px"}
+          underlineWidth={underlineWidth + "px"}
+          isHovering={isHoveringInContainer}
+        ></TypesSlidingUnderline>
+        <TypesContainer>
+          <Type
+            value="movies"
+            noLeftPadding={true}
+            ref={ref1}
+            onMouseEnter={() => handleHover(ref1, "enter")}
+            onClick={() => props.updateHomepageCategory("movies")}
+            selected={props.homepage_category == "movies"}
+          >
+            Movies
+          </Type>
+          <Type
+            value="tv"
+            ref={ref2}
+            onMouseEnter={() => handleHover(ref2, "enter")}
+            onClick={() => props.updateHomepageCategory("tv")}
+            selected={props.homepage_category == "tv"}
+          >
+            TV Shows
+          </Type>
+          <Type
+            value="people"
+            ref={ref3}
+            onMouseEnter={() => handleHover(ref3, "enter")}
+            onClick={() => props.updateHomepageCategory("people")}
+            selected={props.homepage_category == "people"}
+          >
+            People
+          </Type>
+        </TypesContainer>
+      </PopularItemsTypeSelectorContainer>
     </>
   );
 }
@@ -108,11 +117,10 @@ const PopularItemsTypeSelectorContainer = styled.div`
   position: relative;
 `;
 
-const TitleContainer = styled.div`
-`
+const TitleContainer = styled.div``;
 
 const Title = styled.h1`
-font-weight: 500;
+  font-weight: 500;
 `;
 
 const TypesContainer = styled.div`
@@ -122,6 +130,7 @@ const TypesContainer = styled.div`
 
 const Type = styled.div`
   padding: 1;
+  padding-left: ${(props) => (props.noLeftPadding ? "0" : "10px")};
   font-size: 5;
   color: ${(props) => (props.selected ? "black" : "gray")};
   &:hover {
@@ -158,4 +167,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PopularItemsTypeSelector);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PopularItemsTypeSelector);

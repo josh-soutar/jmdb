@@ -5,8 +5,7 @@ import PopularItemsList from "../../molecules/PopularItemsList";
 import { connect } from "react-redux";
 
 const MovieListContainer = styled.div`
-  padding: 10px;
-  max-width: 100%;
+  padding: 20px;
   overflow-x: auto;
 `;
 
