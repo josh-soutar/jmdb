@@ -3,6 +3,7 @@ import styled, { css } from "@xstyled/styled-components";
 import Layout from "../layout";
 import PersonBio from "../components/atoms/PersonBio";
 import PersonKnownForAndCredits from "../components/atoms/PersonKnownForAndCredits";
+import PersonDetails from "../components/atoms/PersonDetails";
 
 export default function Person() {
   const URLparam = new URLSearchParams(document.location.search.substring(1));
@@ -31,28 +32,18 @@ export default function Person() {
 
   return (
     <Layout>
-      <OuterContainer>
+      <OuterContainer className="outerContainer">
         {personData && (
           <>
             <LeftContainer>
               <HeadShot bgImageUrl={posterUrl} />
-              <PersonalInfo>
-                <PersonalInfoTitle>Personal Info</PersonalInfoTitle>
-                <PIHeading>Known For</PIHeading>
-                <PIData>{personData.known_for_department}</PIData>
-                <PIHeading>Gender </PIHeading>
-                <PIData>
-                  {personData.gender && personData.gender === "1" ? (
-                    <>Female</>
-                  ) : (
-                    <>Male</>
-                  )}
-                </PIData>
-                <PIHeading>Birthday</PIHeading>
-                <PIData>{personData.birthday}</PIData>
-                <PIHeading>Origin</PIHeading>
-                <PIData>{personData.place_of_birth}</PIData>
-              </PersonalInfo>
+
+              <PersonDetails
+                knownFor={personData.known_for_department}
+                gender={personData.gender}
+                birthday={personData.birthday}
+                placeOfBirth={personData.place_of_birth}
+              />
             </LeftContainer>
 
             <RightContainer>
@@ -74,14 +65,14 @@ export default function Person() {
 
 const OuterContainer = styled.div`
   max-width: 1300px;
-  width: 100%;
-  margin: 50px auto;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 30px;
   display: flex;
 `;
 
 const sharedGridCss = css`
   display: grid;
-  grid-gap: 20px;
   align-items: start;
   grid-auto-rows: min-content;
 `;
@@ -96,8 +87,9 @@ const LeftContainer = styled.div`
 
 const RightContainer = styled.div`
   ${sharedGridCss}
-  margin-left: 20px;
-  grid-template-columns: auto;
+  padding-left: 20px;
+  grid-template-columns: 100%;
+  width: calc(100% - 200px);
 `;
 
 const HeadShot = styled.div`
@@ -106,26 +98,11 @@ const HeadShot = styled.div`
   background-image: ${(props) => props.bgImageUrl};
   background-size: contain;
   background-repeat: no-repeat;
-  background-style: cover;
   border-radius: 4px;
   grid-area: headshot;
 `;
 
-const PersonalInfo = styled.div`
-  grid-area: personal_info;
-`;
-
-const PIHeading = styled.div`
-  font-weight: bold;
-`;
-const PIData = styled.div``;
-
 const Name = styled.div`
   font-weight: bold;
   font-size: 8;
-`;
-
-const PersonalInfoTitle = styled.h3`
-  font-weight: bold;
-  padding-bottom: 2;
 `;

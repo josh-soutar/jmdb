@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
 import Item from "../../atoms/Item";
 import { Link } from "gatsby";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function PopularItemsList({ item_category }) {
   const [items, setItems] = useState([]);
