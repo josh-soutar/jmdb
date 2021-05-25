@@ -68,15 +68,18 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       //If the keys don't exist yet, create them
       if (!groupedCredits.hasOwnProperty(release_year)) {
         //Create an object for the year key
-        groupedCredits[release_year] = {};
+        groupedCredits[release_year] = {
+          year: release_year,
+          credits: {}, //Credit object will contain a key for each title_id. key value is an array. This allows for users with multiple roles in the same title
+        };
       }
-      if (!groupedCredits[release_year].hasOwnProperty(title_id)) {
-        //Create an array to store credits for this title. This is nested under the release year
-        groupedCredits[release_year][title_id] = [this_credit];
+      if (!groupedCredits[release_year].credits.hasOwnProperty(title_id)) {
+        //Create an array to store credits for this title.
+        groupedCredits[release_year].credits[title_id] = [this_credit];
       }
       //If there are multiple credits for the same title, add each credit to the title array
       else {
-        groupedCredits[release_year][title_id].push(this_credit);
+        groupedCredits[release_year].credits[title_id].push(this_credit);
       }
     }
 
@@ -134,7 +137,7 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       <Heading>Credits</Heading>
 
       <Credits>
-        {groupedCredits && <PersonCreditsList credits={groupedCredits} />}
+        {groupedCredits && <PersonCreditsList personCredits={groupedCredits} />}
       </Credits>
     </Container>
   );
