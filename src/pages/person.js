@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "@xstyled/styled-components";
 import Layout from "../layout";
 import PersonBio from "../components/atoms/PersonBio";
-import PersonKnownForAndCredits from "../components/atoms/PersonKnownForAndCredits";
+import PersonKnownForAndCredits from "../components/molecules/PersonKnownForAndCredits";
 import PersonDetails from "../components/atoms/PersonDetails";
 
 export default function Person() {

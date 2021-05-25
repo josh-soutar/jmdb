@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
-import Item from "../Item";
+import Item from "../../atoms/Item";
+import PersonCreditsList from "../../atoms/PersonCreditsList";
 import { Link } from "gatsby";
 
 export default function PersonKnownForAndCredits({ personId, knownFor }) {
-  const [knownForList, setKnownForList] = useState([]);
-
-  const [sortedCredits, setSortedCredits] = useState([]);
+  const [knownForList, setKnownForList] = useState(undefined);
+  const [groupedCredits, setGroupedCredits] = useState(undefined);
   const [creditsWithoutDate, setCreditsWithoutDate] = useState([]);
 
   useEffect(() => {
@@ -15,17 +15,17 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       .then((res) => res.json())
       .then((result) => {
         getPopularCredits(result);
-        sortByDateDesc(result);
+        groupCreditsByDate(result);
       });
   }, [personId]);
 
   // Converts date format from YYYY-MM-DD to YYYYMMDD,
   // removes empty date values from credits array and
-  // sorts in descending order
-  function sortByDateDesc(credits) {
+  // sorts in descending order, grouped by year
+  function groupCreditsByDate(credits) {
     let creditsWithoutDate = [];
 
-    // First use a map function to iterate through all credits
+    // Use reduce to iterate through all credits
     // and remove empty date values + standardise date key
     const filteredCredits = credits.cast.reduce(function (result, credit) {
       //Standardise keys
@@ -52,14 +52,35 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       return result;
     }, []);
 
-    //Then sort filtredCredits date values in descending order
-    var sortedCredits = filteredCredits.sort(function (a, b) {
+    //Sort filtredCredits date values in descending order
+    const sortedCredits = filteredCredits.sort((a, b) => {
       return b.standardised_date.localeCompare(a.standardised_date);
     });
 
-    console.log("sorted date", sortedCredits);
-    console.log("no date", creditsWithoutDate);
-    setSortedCredits(sortedCredits);
+    //Group credits by year
+
+    const groupedCredits = {};
+    for (let i = 0; i < sortedCredits.length; i++) {
+      let this_credit = sortedCredits[i];
+      let release_year = this_credit.standardised_date.substring(0, 4);
+      let title_id = this_credit.id;
+
+      //If the keys don't exist yet, create them
+      if (!groupedCredits.hasOwnProperty(release_year)) {
+        //Create an object for the year key
+        groupedCredits[release_year] = {};
+      }
+      if (!groupedCredits[release_year].hasOwnProperty(title_id)) {
+        //Create an array to store credits for this title. This is nested under the release year
+        groupedCredits[release_year][title_id] = [this_credit];
+      }
+      //If there are multiple credits for the same title, add each credit to the title array
+      else {
+        groupedCredits[release_year][title_id].push(this_credit);
+      }
+    }
+
+    setGroupedCredits(groupedCredits);
     setCreditsWithoutDate(creditsWithoutDate);
   }
 
@@ -78,14 +99,14 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       let i = 0;
       while (i < mostPopularCredits.length) {
         let url = "/title?type=";
-        let thisCredit = mostPopularCredits[i];
+        let this_credit = mostPopularCredits[i];
 
-        if (thisCredit.media_type === "movie") {
-          url += "movies&id=" + thisCredit.id;
-        } else if (thisCredit.media_type === "tv") {
-          url += "tv&id=" + thisCredit.id;
+        if (this_credit.media_type === "movie") {
+          url += "movies&id=" + this_credit.id;
+        } else if (this_credit.media_type === "tv") {
+          url += "tv&id=" + this_credit.id;
         }
-        thisCredit.url = url;
+        this_credit.url = url;
         i++;
       }
       setKnownForList(mostPopularCredits);
@@ -113,12 +134,7 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       <Heading>Credits</Heading>
 
       <Credits>
-        <ul>
-          {sortedCredits &&
-            sortedCredits.map((credit, index) => (
-              <li key={index}>{credit.standardised_title}</li>
-            ))}
-        </ul>
+        {groupedCredits && <PersonCreditsList credits={groupedCredits} />}
       </Credits>
     </Container>
   );
