@@ -7,6 +7,7 @@ import { Link } from "gatsby";
 export default function PersonKnownForAndCredits({ personId, knownFor }) {
   const [knownForList, setKnownForList] = useState(undefined);
   const [groupedCredits, setGroupedCredits] = useState(undefined);
+  //const [sortedCredits, setSortedCredits] = useState(undefined);
   const [creditsWithoutDate, setCreditsWithoutDate] = useState([]);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
   // removes empty date values from credits array and
   // sorts in descending order, grouped by year
   function groupCreditsByDate(credits) {
-    let creditsWithoutDate = [];
+    const creditsWithoutDate = [];
 
     // Use reduce to iterate through all credits
     // and remove empty date values + standardise date key
@@ -58,32 +59,37 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
     });
 
     //Group credits by year
-
-    const groupedCredits = {};
+    const groupedCreditsObj = {};
     for (let i = 0; i < sortedCredits.length; i++) {
       let this_credit = sortedCredits[i];
       let release_year = this_credit.standardised_date.substring(0, 4);
       let title_id = this_credit.id;
 
       //If the keys don't exist yet, create them
-      if (!groupedCredits.hasOwnProperty(release_year)) {
+      if (!groupedCreditsObj.hasOwnProperty(release_year)) {
         //Create an object for the year key
-        groupedCredits[release_year] = {
+        groupedCreditsObj[release_year] = {
           year: release_year,
           credits: {}, //Credit object will contain a key for each title_id. key value is an array. This allows for users with multiple roles in the same title
         };
       }
-      if (!groupedCredits[release_year].credits.hasOwnProperty(title_id)) {
+      if (!groupedCreditsObj[release_year].credits.hasOwnProperty(title_id)) {
         //Create an array to store credits for this title.
-        groupedCredits[release_year].credits[title_id] = [this_credit];
+        groupedCreditsObj[release_year].credits[title_id] = [this_credit];
       }
       //If there are multiple credits for the same title, add each credit to the title array
       else {
-        groupedCredits[release_year].credits[title_id].push(this_credit);
+        groupedCreditsObj[release_year].credits[title_id].push(this_credit);
       }
     }
 
-    setGroupedCredits(groupedCredits);
+    const groupedCreditsArr = [];
+    //convert groupedCreditsObj to an array where each element is an object for each year
+    for (const year in groupedCreditsObj) {
+      groupedCreditsArr.push(groupedCreditsObj[year]);
+    }
+
+    setGroupedCredits(groupedCreditsArr);
     setCreditsWithoutDate(creditsWithoutDate);
   }
 
@@ -137,7 +143,12 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       <Heading>Credits</Heading>
 
       <Credits>
-        {groupedCredits && <PersonCreditsList personCredits={groupedCredits} />}
+        {groupedCredits && creditsWithoutDate && (
+          <PersonCreditsList
+            credits={groupedCredits}
+            creditsWithoutDate={creditsWithoutDate}
+          />
+        )}
       </Credits>
     </Container>
   );
