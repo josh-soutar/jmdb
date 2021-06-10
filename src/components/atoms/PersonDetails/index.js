@@ -1,23 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@xstyled/styled-components";
+import { DateTime, Interval } from "luxon";
 
-export default function PersonDetails({
-  knownFor,
-  gender,
-  birthday,
-  placeOfBirth,
-}) {
+export default function PersonDetails({ knownFor, birthday, placeOfBirth }) {
+  const [age, setAge] = useState("");
+
+  useEffect(() => {
+    //Calculate age
+    if (birthday) {
+      let fullBirthdayString = "";
+      const today = DateTime.now();
+      const isoBday = DateTime.fromISO(birthday);
+      const localBday = DateTime.fromISO(birthday).toLocaleString(
+        DateTime.DATE_MED
+      );
+
+      let ageInYears = Math.floor(
+        Interval.fromDateTimes(isoBday, today).length("years")
+      );
+
+      if (ageInYears === 1) {
+        fullBirthdayString =
+          localBday + " (" + ageInYears.toString() + " year old)";
+      } else {
+        fullBirthdayString =
+          localBday + " (" + ageInYears.toString() + " years old)";
+      }
+      setAge(fullBirthdayString);
+    }
+  }, birthday);
+
   return (
     <PersonalInfo>
       <PersonalInfoTitle>Personal Info</PersonalInfoTitle>
       <PIHeading>Known For</PIHeading>
       <PIData>{knownFor}</PIData>
-      <PIHeading>Gender </PIHeading>
-      <PIData>{gender === "1" ? <>Female</> : <>Male</>}</PIData>
-      <PIHeading>Birthday</PIHeading>
-      <PIData>{birthday}</PIData>
-      <PIHeading>Origin</PIHeading>
-      <PIData>{placeOfBirth}</PIData>
+
+      {birthday && (
+        <>
+          <PIHeading>Birthday</PIHeading>
+          <PIData>{age}</PIData>
+        </>
+      )}
+
+      {placeOfBirth && (
+        <>
+          <PIHeading>Origin</PIHeading>
+          <PIData>{placeOfBirth}</PIData>
+        </>
+      )}
     </PersonalInfo>
   );
 }

@@ -40,7 +40,6 @@ export default function Person() {
 
               <PersonDetails
                 knownFor={personData.known_for_department}
-                gender={personData.gender}
                 birthday={personData.birthday}
                 placeOfBirth={personData.place_of_birth}
               />
@@ -105,4 +104,5 @@ const HeadShot = styled.div`
 const Name = styled.div`
   font-weight: bold;
   font-size: 8;
+  padding-bottom: 2;
 `;

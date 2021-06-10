@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "@xstyled/styled-components";
 import { DateTime, Duration } from "luxon";
 

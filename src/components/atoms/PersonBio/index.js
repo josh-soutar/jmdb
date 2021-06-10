@@ -79,5 +79,4 @@ const BioShowMoreToggle = styled.div`
 
 const BioText = styled.div`
   border-radius: 3px;
-  padding: 3 0 2 0;
 `;

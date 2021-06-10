@@ -53,15 +53,10 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
       return result;
     }, []);
 
-    //Sort filtredCredits date values in descending order
-    const sortedCredits = filteredCredits.sort((a, b) => {
-      return b.standardised_date.localeCompare(a.standardised_date);
-    });
-
     //Group credits by year
     const groupedCreditsObj = {};
-    for (let i = 0; i < sortedCredits.length; i++) {
-      let this_credit = sortedCredits[i];
+    for (let i = 0; i < filteredCredits.length; i++) {
+      let this_credit = filteredCredits[i];
       let release_year = this_credit.standardised_date.substring(0, 4);
       let title_id = this_credit.id;
 
@@ -142,14 +137,12 @@ export default function PersonKnownForAndCredits({ personId, knownFor }) {
 
       <Heading>Credits</Heading>
 
-      <Credits>
-        {groupedCredits && creditsWithoutDate && (
-          <PersonCreditsList
-            credits={groupedCredits}
-            creditsWithoutDate={creditsWithoutDate}
-          />
-        )}
-      </Credits>
+      {groupedCredits && creditsWithoutDate && (
+        <PersonCreditsList
+          credits={groupedCredits}
+          creditsWithoutDate={creditsWithoutDate}
+        />
+      )}
     </Container>
   );
 }
@@ -161,6 +154,8 @@ const Container = styled.div`
 
 const Heading = styled.div`
   font-weight: bold;
+  font-size: 5;
+  padding: 2 0;
 `;
 
 const Subheading = styled.h3`
@@ -171,16 +166,15 @@ const Subheading = styled.h3`
 const KnownFor = styled.div`
   display: flex;
   overflow-x: auto;
+  padding: 0 0 1 0;
 `;
 
 const ListItem = styled.div`
-  margin: 1;
-  ${({ first }) => first && `margin: 10px 10px 10px 0;`}
-  ${({ last }) => last && `margin: 10px 0 10px 10px;`}
+  margin: 0 10px 0 10px;
+  ${({ first }) => first && `margin: 0 10px 0 0;`}
+  ${({ last }) => last && `margin: 0 0 10px 0;`}
 `;
 
 const StyledLink = styled(Link)`
   height: 100%;
 `;
-
-const Credits = styled.div``;
